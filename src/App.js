@@ -3,7 +3,7 @@ import './App.css';
 import Menu from './components/Menu';
 import Nav from './components/Nav';
 import Quote from './components/Quote';
-import QuoteCanvas from './components/QuoteCanvas';
+import QuoteDisplay from './components/QuoteDisplay';
 import QuoteControls from './components/QuoteControls';
 
 class App extends React.Component {
@@ -12,15 +12,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       quotes: [{
-        body: 'test quote',
-        author: 'Ryan Cahela'
+        body: 'Always focus on how far you\'ve come, not how far you have to go.',
+        author: 'Anonymous'
       }],
       backgroundImageUrl: '',
       fontFamily: 'Arial, Helvetica, sans-serif'
     }
 
-    this.quoteCanvas = (
-      <QuoteCanvas 
+    this.quoteDisplay = (
+      <QuoteDisplay 
       backgroundImageUrl={this.state.backgroundImageUrl} 
       fontFamily={this.state.fontFamily}
       quote={this.state.quotes[0]}/>
@@ -47,8 +47,8 @@ class App extends React.Component {
   }
 
   render() {
-    const quoteCanvas = (
-      <QuoteCanvas 
+    const quoteDisplay = (
+      <QuoteDisplay 
       backgroundImageUrl={this.state.backgroundImageUrl} 
       fontFamily={this.state.fontFamily}
       quote={this.state.quotes[0]}/>
@@ -61,7 +61,7 @@ class App extends React.Component {
     return (
         <>
         <Menu />
-        <Quote quoteCanvas={quoteCanvas} quoteControls={quoteControls}/>
+        <Quote quoteDisplay={quoteDisplay} quoteControls={quoteControls}/>
         <Nav />
         </>
     );
