@@ -7,6 +7,7 @@ import QuoteDisplay from './components/QuoteDisplay';
 import QuoteControls from './components/QuoteControls';
 import fontPairings from './fonts/fontPairings';
 import quotes from './quotes/quotes';
+import IteratorServices from './Services/IteratorServices';
 
 class App extends React.Component {
 
@@ -28,15 +29,68 @@ class App extends React.Component {
 
     this.handleRandomize = this.handleRandomize.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
+    this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
   }
+
 
   componentDidMount() {
     this.getBackgroundImages(30);
-    this.createFontPairIterator();
-    this.createQuoteIterator();
+    this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
+    this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
+  }
+  
+  handleRandomize() {
+    if(!this.state.keepBackground) {
+      this.setBackgroundUrl(this.backgroundUrlItObj.next());
+    }
+    if(!this.state.keepFonts) {
+      this.setFontPairing(this.fontPairItObj.next());
+    }
+    if(!this.state.keepQuote) {
+      this.setQuote(this.quoteItObj.next());
+    }
+  }
+  
+  handleUndo() {
+    this.setState((currentState) => {
+      return {
+        backgroundImageUrl: currentState.previousBackgroundImageUrl,
+        fontPair: currentState.previousFontPair,
+        currentQuote: currentState.previousQuote
+      }
+    })
   }
 
-  //creates a bg image iterator
+  handleCheckboxCheck(e) {
+    switch(e.target.id) {
+      case 'keep-quote-checkbox':
+        this.setState((currentState) => {
+          return {
+            keepQuote: !currentState.keepQuote
+          }
+        });
+        break;
+      case 'keep-fonts-checkbox':
+        this.setState((currentState) => {
+          return {
+            keepFonts: !currentState.keepFonts
+          }
+        });
+        break;
+      case 'keep-background-checkbox':
+        this.setState((currentState) => {
+          return {
+            keepBackground: !currentState.keepBackground
+          }
+        })
+        break;
+      default:
+        console.log('Something went wrong with the switch');
+    }
+  }
+  
+  
+  //HELPER FUNCTIONS
   getBackgroundImages(numberOfImages) {
     if(numberOfImages > 30) {
       numberOfImages = 30;
@@ -53,27 +107,12 @@ class App extends React.Component {
       },
       //runs after setState
       () => {
-        this.backgroundUrlItObj = this.createIteratorObj(this.state.backgroundImageUrls);
+        this.backgroundUrlItObj = IteratorServices.createIterator(this.state.backgroundImageUrls)
         this.handleRandomize();
       })
     });
   }
-
-  //create a fontPair Iterator
-  createFontPairIterator() {
-    this.fontPairItObj = this.createIteratorObj(this.state.fontPairings);
-  }
-
-  createQuoteIterator() {
-    this.quoteItObj = this.createIteratorObj(this.state.quotes);
-  }
-
-  *createIteratorObj(arr) {
-    for(let obj of arr) {
-      yield obj;
-    }
-  }
-
+  
   setBackgroundUrl({value, done}) {
     if(!done) {
       this.setState((currentState) => {
@@ -88,7 +127,7 @@ class App extends React.Component {
       this.getBackgroundImages(30)
     }
   }
-
+  
   setFontPairing({value, done}) {
     if(!done) {
       this.setState((currentState) => {
@@ -100,13 +139,12 @@ class App extends React.Component {
     }
     else {
       //if iterator done create new iterator then call the first value on it.
-      this.createFontPairIterator();
+      this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
       this.setFontPairing(this.fontPairItObj.next());
     }
   }
-
+  
   setQuote({value, done}) {
-    console.log(value);
     if(!done) {
       this.setState(currentState => {
         return {
@@ -116,25 +154,9 @@ class App extends React.Component {
       })
     }
     else {
-      this.createQuoteIterator();
+      this.quoteItObj = IteratorServices.creatIterator(this.state.quotes);
       this.setQuote(this.quoteItObj.next());
     }
-  }
-
-  handleRandomize() {
-    this.setBackgroundUrl(this.backgroundUrlItObj.next());
-    this.setFontPairing(this.fontPairItObj.next());
-    this.setQuote(this.quoteItObj.next());
-  }
-
-  handleUndo() {
-    this.setState((currentState) => {
-      return {
-        backgroundImageUrl: currentState.previousBackgroundImageUrl,
-        fontPair: currentState.previousFontPair,
-        currentQuote: currentState.previousQuote
-      }
-    })
   }
 
   render() {
@@ -146,15 +168,16 @@ class App extends React.Component {
       quote={this.state.currentQuote}/>
     )
     const quoteControls = (
-      <QuoteControls />
+      <QuoteControls 
+        handleCheckboxCheck={this.handleCheckboxCheck}/>
     )
-
+        
     return (
-        <>
-        <Menu />
-        <Quote quoteDisplay={quoteDisplay} quoteControls={quoteControls}/>
-        <Nav handleRandomize={this.handleRandomize} handleUndo={this.handleUndo}/>
-        </>
+      <>
+    <Menu />
+    <Quote quoteDisplay={quoteDisplay} quoteControls={quoteControls}/>
+    <Nav handleRandomize={this.handleRandomize} handleUndo={this.handleUndo}/>
+    </>
     );
   }
 }
