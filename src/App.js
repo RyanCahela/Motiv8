@@ -90,8 +90,7 @@ class App extends React.Component {
   }
 
   setFontPairing({value, done}) {
-    if(value) {
-      console.log(value);
+    if(!done) {
       this.setState((currentState) => {
         return {
           fontPair: value,
@@ -108,7 +107,7 @@ class App extends React.Component {
 
   setQuote({value, done}) {
     console.log(value);
-    if(value) {
+    if(!done) {
       this.setState(currentState => {
         return {
           currentQuote: value,
