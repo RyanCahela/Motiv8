@@ -1,0 +1,17 @@
+import React from 'react'
+import { QuoteContext } from '../contexts/QuoteContextManager';
+
+export default function QuoteNav(props) {
+  return (
+    <QuoteContext.Consumer>
+      {function quoteConsumer({ methods }) {
+        return (
+          <div>
+            <button onClick={() => methods.handleUndo()}>Undo</button>
+            <button onClick={() => methods.handleRandomize()}>Randomize</button>
+          </div>
+        )
+      }}
+    </QuoteContext.Consumer>
+  )
+}

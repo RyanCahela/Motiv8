@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function App(props) {
+export default function UserProfilePage() {
   return (
     <div>
-      {props.children}
+      
     </div>
   )
 }
