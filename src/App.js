@@ -97,7 +97,7 @@ class App extends React.Component {
     }
     fetch(`https://api.unsplash.com/photos/random?count=${numberOfImages}`, {
       headers: {
-        Authorization: 'Client-ID 637ad8107185907a6e559449be25e4c6fb9429f66f500149003592bbf8bf49ce'
+        Authorization: `Client-ID ${process.env.REACT_APP_API_KEY}`
       }
     })
     .then(res => res.json())
@@ -154,7 +154,7 @@ class App extends React.Component {
       })
     }
     else {
-      this.quoteItObj = IteratorServices.creatIterator(this.state.quotes);
+      this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
       this.setQuote(this.quoteItObj.next());
     }
   }
