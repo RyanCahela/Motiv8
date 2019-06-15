@@ -4,9 +4,6 @@ import CreateAccountForm from '../components/CreateAccountForm';
 
 export default function LoginPage() {
   return (
-    <>
-    <Menu />
     <CreateAccountForm />
-    </>
   )
 }
