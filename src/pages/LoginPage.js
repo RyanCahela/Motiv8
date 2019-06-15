@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Menu from '../components/Menu';
+import CreateAccountForm from '../components/CreateAccountForm';
 
 export default function LoginPage() {
   return (
-    <div>
-      
-    </div>
+    <>
+    <Menu />
+    <CreateAccountForm />
+    </>
   )
 }

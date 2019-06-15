@@ -1,13 +1,9 @@
 import React from 'react';
-import Menu from '../components/Menu';
-import Nav from '../components/QuoteNav';
-import Quote from '../components/Quote';
 import QuoteDisplay from '../components/QuoteDisplay';
 import QuoteControls from '../components/QuoteControls';
 import fontPairings from '../fonts/fontPairings';
 import quotes from '../quotes/quotes';
 import IteratorServices from '../services/IteratorServices';
-import Router from '../router/Router';
 
 const QuoteContext = React.createContext();
 
