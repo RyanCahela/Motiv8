@@ -14,7 +14,7 @@ export default class QuoteDisplay extends React.Component {
   render() {
     return (
       <QuoteContext>
-        {function quoteConsumer({ state }) {
+        {({ state }) => {
           const dynamicBackgroundStyles = {
             backgroundSize: 'cover',
             backgroundPosition: 'center center',

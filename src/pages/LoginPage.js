@@ -1,9 +1,21 @@
 import React from 'react';
-import Menu from '../components/Menu';
 import CreateAccountForm from '../components/CreateAccountForm';
+import { UserContext } from '../contexts/UserContextManager';
 
-export default function LoginPage() {
+export default function LoginPage({ history }) {
+  
   return (
-    <CreateAccountForm />
+    <UserContext.Consumer>
+      {({ state }) => {
+        if(state.isLoggedIn) {
+          history.push('/quote')
+        }
+        else{
+          return(
+            <CreateAccountForm />
+          )    
+        }
+      }}
+    </UserContext.Consumer>
   )
 }

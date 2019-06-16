@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
+import { UserContext } from '../contexts/UserContextManager';
 
 export default class CreateAccountForm extends Component {
 
-  state = {
-    email: '',
-    userName: '',
-    password: '',
-    passwordConfirm: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      username: '',
+      password: '',
+      passwordConfirm: '',
+    }
+
+    this.handleTextInput = this.handleTextInput.bind(this);
   }
 
   handleTextInput(e) {
@@ -39,36 +45,42 @@ export default class CreateAccountForm extends Component {
 
   render() {
     return (
-      <>
-      <h3>Create An Account</h3>
-      <form class="input-form">
-      <label htmlFor="email-input">Email:</label>
-        <input 
-          id="email-input"
-          type="text"
-          onChange={(e) => this.handleTextInput(e)}/>
+      <UserContext.Consumer>
+        {({ methods }) => {
+          return (
+            <>
+              <h3>Create An Account</h3>
+              <form class="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
+              <label htmlFor="email-input">Email:</label>
+                <input 
+                  id="email-input"
+                  type="text"
+                  onChange={(e) => this.handleTextInput(e)}/>
 
-        <label htmlFor="username-input">Username:</label>
-        <input 
-          id="username-input"
-          type="text"
-          onChange={(e) => this.handleTextInput(e)}/>
+                <label htmlFor="username-input">Username:</label>
+                <input 
+                  id="username-input"
+                  type="text"
+                  onChange={(e) => this.handleTextInput(e)}/>
 
-        <label htmlFor="password-input">Password:</label>
-        <input 
-          id="password-input" 
-          type="password" 
-          onChange={(e) => this.handleTextInput(e)} />
+                <label htmlFor="password-input">Password:</label>
+                <input 
+                  id="password-input" 
+                  type="password" 
+                  onChange={(e) => this.handleTextInput(e)} />
 
-        <label htmlFor="password-confirm-input">Confirm Password</label>
-        <input 
-          id="password-confirm-input" 
-          type="password" 
-          onChange={(e) => this.handleTextInput(e)}/>
+                <label htmlFor="password-confirm-input">Confirm Password</label>
+                <input 
+                  id="password-confirm-input" 
+                  type="password" 
+                  onChange={(e) => this.handleTextInput(e)}/>
 
-        <input type="submit" />
-      </form>
-      </>
+                <input type="submit" />
+              </form>
+            </>
+          )
+        }}
+      </UserContext.Consumer>
     )
   };
 }

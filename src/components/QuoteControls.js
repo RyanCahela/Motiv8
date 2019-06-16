@@ -5,7 +5,7 @@ import { QuoteContext } from '../contexts/QuoteContextManager';
 export default function QuoteControls(props) {
   return (
     <QuoteContext.Consumer>
-      {function quoteConsumer({ methods }) {
+      {({ methods }) => {
         return (
           <div className="btn-group">
             <label htmlFor="keep-quote-checkbox">Keep Quote</label>

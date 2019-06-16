@@ -4,7 +4,7 @@ import { QuoteContext } from '../contexts/QuoteContextManager';
 export default function QuoteNav(props) {
   return (
     <QuoteContext.Consumer>
-      {function quoteConsumer({ methods }) {
+      {({ methods }) => {
         return (
           <div>
             <button onClick={() => methods.handleUndo()}>Undo</button>
