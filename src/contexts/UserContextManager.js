@@ -29,7 +29,6 @@ class UserContextManager extends Component {
   }
 
   render() {
-
     const userContext = {
       methods: {
         handleCreateAccountSubmit: this.handleCreateAccountSubmit

@@ -39,24 +39,43 @@ class QuoteContextManager extends React.Component {
   
   handleRandomize() {
     if(!this.state.keepBackground) {
-      this.setBackgroundUrl(this.backgroundUrlItObj.next());
+      this.iterateBackgroundUrl(this.backgroundUrlItObj.next());
     }
     if(!this.state.keepFonts) {
-      this.setFontPairing(this.fontPairItObj.next());
+      this.iterateFontPairing(this.fontPairItObj.next());
     }
     if(!this.state.keepQuote) {
-      this.setQuote(this.quoteItObj.next());
+      this.iterateQuote(this.quoteItObj.next());
     }
   }
   
   handleUndo() {
-    this.setState((currentState) => {
-      return {
-        backgroundImageUrl: currentState.previousBackgroundImageUrl,
-        fontPair: currentState.previousFontPair,
-        currentQuote: currentState.previousQuote
-      }
-    })
+    if(!this.state.keepBackground) {
+      this.setState((currentState) => {
+        return {
+          backgroundImageUrl: currentState.previousBackgroundImageUrl,
+          previousBackgroundImageUrl: currentState.backgroundImageUrl
+        }
+      })
+    }
+
+    if(!this.state.keepFonts) {
+      this.setState((currentState) => {
+        return {
+          fontPair: currentState.previousFontPair,
+          previousFontPair: currentState.fontPair
+        }
+      })
+    }
+
+    if(!this.state.keepQuote) {
+      this.setState((currentState) => {
+        return {
+          currentQuote: currentState.previousQuote,
+          previousQuote: currentState.currentQuote
+        }
+      })
+    }
   }
 
   handleCheckboxCheck(e) {
@@ -110,7 +129,7 @@ class QuoteContextManager extends React.Component {
     });
   }
   
-  setBackgroundUrl({value, done}) {
+  iterateBackgroundUrl({value, done}) {
     if(!done) {
       this.setState((currentState) => {
         return {
@@ -125,7 +144,7 @@ class QuoteContextManager extends React.Component {
     }
   }
   
-  setFontPairing({value, done}) {
+  iterateFontPairing({value, done}) {
     if(!done) {
       this.setState((currentState) => {
         return {
@@ -137,11 +156,11 @@ class QuoteContextManager extends React.Component {
     else {
       //if iterator done create new iterator then call the first value on it.
       this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
-      this.setFontPairing(this.fontPairItObj.next());
+      this.iterateFontPairing(this.fontPairItObj.next());
     }
   }
   
-  setQuote({value, done}) {
+  iterateQuote({value, done}) {
     if(!done) {
       this.setState(currentState => {
         return {
@@ -152,7 +171,7 @@ class QuoteContextManager extends React.Component {
     }
     else {
       this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
-      this.setQuote(this.quoteItObj.next());
+      this.iterateQuote(this.quoteItObj.next());
     }
   }
 
