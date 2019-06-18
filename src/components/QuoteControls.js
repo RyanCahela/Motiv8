@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/quoteControls.css'
+import '../css/QuoteControls.css'
 import { QuoteContext } from '../contexts/QuoteContextManager';
 
 export default function QuoteControls(props) {

@@ -1,0 +1,4 @@
+1. on the menu component, when collapsed would 
+you wrap the header in a div just for continuity?
+
+2.

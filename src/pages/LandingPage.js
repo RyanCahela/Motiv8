@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
   return (
@@ -17,7 +18,9 @@ export default function LandingPage() {
             sint occaecat cupidatat non proident, sunt in culpa 
             qui officia deserunt mollit anim id est laborum."
           </p>
-          <button className="landing-button">Get Started!</button>
+          <Link to={'/login'}>
+            <button className="landing-button">Get Started!</button>
+          </Link>
         </main>
     </div>
   )
