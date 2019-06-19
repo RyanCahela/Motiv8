@@ -10,11 +10,11 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <App>
-    <QuoteContextManager>
-      <UserContextManager>
+    <UserContextManager>
+      <QuoteContextManager>
         <Router />
-      </UserContextManager>
-    </QuoteContextManager>
+      </QuoteContextManager>
+    </UserContextManager>
   </App>
   
   ,document.getElementById('root'));

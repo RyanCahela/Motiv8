@@ -32,7 +32,8 @@ class QuoteContextManager extends React.Component {
 
 
   componentDidMount() {
-    this.getBackgroundImages(30);
+    this.getBackgroundImages(30)
+      .then()
     this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
     this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
   }
@@ -76,6 +77,10 @@ class QuoteContextManager extends React.Component {
         }
       })
     }
+  }
+
+  handleSaveQuote() {
+    //TODO sends current quote config to favorites db table.
   }
 
   handleCheckboxCheck(e) {
@@ -176,17 +181,6 @@ class QuoteContextManager extends React.Component {
   }
 
   render() {
-    //create components to pass down
-    const quoteDisplay = (
-      <QuoteDisplay 
-      backgroundImageUrl={this.state.backgroundImageUrl} 
-      fontPair={this.state.fontPair}
-      quote={this.state.currentQuote}/>
-    )
-    const quoteControls = (
-      <QuoteControls 
-        handleCheckboxCheck={this.handleCheckboxCheck}/>
-    )
 
     const quoteContext = {
       state: this.state,
@@ -194,6 +188,7 @@ class QuoteContextManager extends React.Component {
         handleCheckboxCheck: this.handleCheckboxCheck,
         handleRandomize: this.handleRandomize,
         handleUndo: this.handleUndo,
+        handleSaveQuote: this.handleSaveQuote
       }
     }
 

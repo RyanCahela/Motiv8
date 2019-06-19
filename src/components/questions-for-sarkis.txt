@@ -1,4 +1,14 @@
 1. on the menu component, when collapsed would 
 you wrap the header in a div just for continuity?
 
-2.
+2. is it better to use a single context in page component and pass props down its children or
+use multiple instances of context directly in the child components.
+
+3. why do ternary ops work in jsx {if(condition) {.....}} when if statements don't?
+
+
+5. how would you store 'keywords' associated with a certain row in a table? comma separated string?
+
+6. database schema review
+
+7. would i just store the user id in state? would it be a security issue?

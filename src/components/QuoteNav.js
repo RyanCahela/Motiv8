@@ -9,7 +9,7 @@ export default function QuoteNav(props) {
           <div>
             <button onClick={() => methods.handleUndo()}>Undo</button>
             <button onClick={() => methods.handleRandomize()}>Randomize</button>
-            <button>Save</button>
+            <button onClick={() => methods.handleSaveQuote()}>Save</button>
           </div>
         )
       }}

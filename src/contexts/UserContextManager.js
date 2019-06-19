@@ -11,7 +11,8 @@ class UserContextManager extends Component {
       userName: '',
       password: '',
       email: '',
-      id: 1
+      id: 1,
+      favoritesList: []
     }
 
     this.handleCreateAccountSubmit = this.handleCreateAccountSubmit.bind(this);
