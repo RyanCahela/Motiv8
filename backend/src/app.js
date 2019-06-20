@@ -14,7 +14,7 @@ app.use(morgan());
 app.use(helmet());
 app.use('/api/quotes', quotesRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/savedQuotes/', saveQuoteRouter)
+app.use('/api/savedQuotes/', saveQuoteRouter);
 
 module.exports = app;
 

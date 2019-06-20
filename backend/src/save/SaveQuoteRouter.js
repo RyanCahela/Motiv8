@@ -6,25 +6,35 @@ const jsonParser = express.json();
 
 
 saveQuoteRouter.route('/')
-  .post(jsonParser, (req, res, next) => {
+  .all((req, res, next) => {
+    this.db = req.app.get('db');
+    next();
+  })
+  .post(jsonParser, (req, res) => {
+    const { userid } = req.body; 
     SaveQuoteServices
-      .saveQuote(res.app.get('db'), req.body.userid)
+      .saveQuote(this.db, userid)
       .then(quoteThatWasSaved => {
         res.status(201).send();
       })
   })
-  .patch(jsonParser, (req, res, next) => {
+  .patch(jsonParser, (req, res) => {
+    const { savedQuoteId } = req.body;
     SaveQuoteServices
-      .updateSavedQuoteById(req.app.get('db'), req.body.id, req.body)
+      .updateSavedQuoteById(this.db, savedQuoteId, req.body)
       .then(updatedQuote => {
         res.status(204).send();
       })
   })
 
 saveQuoteRouter.route('/:userId')
-  .get((req,res, next) => {
+  .all((req, res, next) => {
+    this.db = req.app.get('db');
+    next();
+  })
+  .get((req,res) => {
     SaveQuoteServices
-      .getSavedQuotesByUserId(req.app.get('db'), req.params.userId)
+      .getSavedQuotesByUserId(this.db, req.params.userId)
       .then(savedQuotes => {
         res.status(200).json(savedQuotes);
       })

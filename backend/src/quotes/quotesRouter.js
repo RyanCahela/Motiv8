@@ -1,8 +1,7 @@
 const express = require('express');
+const QuotesServices = require('./QuotesServices');
 
 const quotesRouter = express.Router();
-const jsonParser = express.json();
-const tempQuotes = require('./tempQuotes.js');
 
 quotesRouter
   .route('/')
@@ -10,12 +9,7 @@ quotesRouter
 
     const randomNumArray = generateRandomNumArrayWithLength(30);
 
-    console.log(randomNumArray);
-
-    req.app.get('db')
-      .from('quotes')
-      .select('*')
-      .whereIn('id', randomNumArray)
+    QuotesServices.getQuotesByIdArray(req.app.get('db'), randomNumArray)
       .then(quotes => {
         res.status(200).json(quotes)
       });
