@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const quotesRouter = require('./quotes/quotesRouter');
 const usersRouter = require('./users/usersRouter');
+const saveQuoteRouter = require('./save/SaveQuoteRouter.js');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(morgan());
 app.use(helmet());
 app.use('/api/quotes', quotesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/savedQuotes/', saveQuoteRouter)
 
 module.exports = app;
 
