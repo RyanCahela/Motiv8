@@ -8,19 +8,19 @@ export default function UserMenu(props) {
   return (
     <UserContext.Consumer>
       {({ state }) => {
-        return (
-          <ul>
-            <li>
-              <Link to={`/user/${state.id}`}>Profile</Link>
-            </li>
-            <li>
-              <Link to={'/quotes'}>Quote Generator</Link>
-            </li>
-            <li>
-              <Link to={`/logout`}>Logout</Link>
-            </li>
-          </ul>
-        )
+          return (
+            <ul>
+              <li>
+                <Link to={`/user/${state.id}`}>Profile</Link>
+              </li>
+              <li>
+                <Link to={'/quotes'}>Quote Generator</Link>
+              </li>
+              <li>
+                <Link to={`/logout/${state.userId}`}>Log Out</Link>
+              </li>
+            </ul>
+          )
       }}
     </UserContext.Consumer>
   )

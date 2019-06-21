@@ -50,7 +50,7 @@ export default class CreateAccountForm extends Component {
           return (
             <>
               <h3>Create An Account</h3>
-              <form class="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
+              <form className="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
               <label htmlFor="email-input">Email:</label>
                 <input 
                   id="email-input"

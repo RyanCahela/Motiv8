@@ -35,8 +35,7 @@ userRouter
     UsersServices.getUserByUsername(this.db, username)
       .then((users) => {
         res.status(200).json(users);
-      })              
+      })
   })
-
 
 module.exports = userRouter;

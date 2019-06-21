@@ -1,6 +1,4 @@
 import React from 'react';
-import QuoteDisplay from '../components/QuoteDisplay';
-import QuoteControls from '../components/QuoteControls';
 import fontPairings from '../fonts/fontPairings';
 import quotes from '../quotes/quotes';
 import IteratorServices from '../services/IteratorServices';
@@ -33,7 +31,6 @@ class QuoteContextManager extends React.Component {
 
   componentDidMount() {
     this.getBackgroundImages(30)
-      .then()
     this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
     this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
   }
@@ -123,6 +120,7 @@ class QuoteContextManager extends React.Component {
     })
     .then(res => res.json())
     .then(resJson => {
+      console.log(resJson);
       this.setState({
         backgroundImageUrls: resJson,
       },

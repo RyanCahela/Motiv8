@@ -1,7 +1,8 @@
 import React from 'react';
-import CreateAccountForm from './CreateAccountForm';
+import AccountAccessForms from './AccountAccessForms';
 import '../css/Menu.css';
 import UserMenu from './UserMenu';
+import { UserContext } from '../contexts/UserContextManager';
 
 export default class Menu extends React.Component {
 
@@ -25,25 +26,32 @@ export default class Menu extends React.Component {
   
 
   render() {
-
-    if(this.state.menuIsOpen) {
-      return (
-        <div className="menu">
-          <header>
-            <button onClick={this.toggleMenuIsOpen}>Menu</button>
-          </header>
-          {this.state.userIsLoggedIn? <UserMenu /> : <CreateAccountForm />}
-        </div>
-      )
-    }
-    else {
-      return (
-        <div className="menu">
-          <header>
-            <button onClick={this.toggleMenuIsOpen}>Menu</button>
-          </header>
-        </div>
-      )
-    }
-  }
+    return (
+      <UserContext.Consumer>
+        {({ state }) => {
+          if(this.state.menuIsOpen) {
+            return (
+              <div className="menu">
+                <header>
+                  <button onClick={this.toggleMenuIsOpen}>Menu</button>
+                  <span>loggedIn? {`${state.isLoggedIn}`}</span>
+                </header>
+                {state.isLoggedIn? <UserMenu /> : <AccountAccessForms />}
+              </div>
+            )
+          }
+          else {
+            return (
+              <div className="menu">
+                <header>
+                  <button onClick={this.toggleMenuIsOpen}>Menu</button>
+                </header>
+              </div>
+            )
+          }
+        }
+        }
+      </UserContext.Consumer>
+    )
+  }    
 }

@@ -7,7 +7,6 @@ import { UserContext } from '../contexts/UserContextManager';
 export default function UserProfilePage({ match, history }) {
   return (
     <div>
-      <Menu />
       <FavoritesList history={history}/>
       <AccountDetails />
     </div>
