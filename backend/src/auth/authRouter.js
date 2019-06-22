@@ -1,14 +1,15 @@
 const express = require('express');
 const AuthServices = require('./AuthServices');
 
-
 const AuthRouter = express.Router();
 const jsonParser = express.json();
 
 AuthRouter.route('/')
   .post(jsonParser, (req, res, next) => {
+    console.log('req.body', req.body);
     const { username, password } = req.body;
     const userCredentials = { username, password };
+    console.log(userCredentials);
     
 
     for (const [key, value] of Object.entries(userCredentials)) {
@@ -31,7 +32,8 @@ AuthRouter.route('/')
                   const subject = dbUser.username;
                   const payload = { user_id: dbUser.id };
                   res.send({
-                    authToken: AuthServices.createJwt(subject, payload)
+                    authToken: AuthServices.createJwt(subject, payload),
+                    userId: dbUser.id
                   })
                 })
       })

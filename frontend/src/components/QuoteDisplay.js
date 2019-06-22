@@ -32,7 +32,7 @@ export default class QuoteDisplay extends React.Component {
           return (
             <div className="quote-display"style={dynamicBackgroundStyles}>
               <div className="quote-backdrop">
-                <div className="quote-body" style={dynamicBodyFont}>{state.currentQuote.body}</div>
+                <div className="quote-body" style={dynamicBodyFont}>{state.currentQuote.quote}</div>
                 <div className="quote-author" style={dynamicAuthorFont}>{state.currentQuote.author}</div>
               </div>
             </div>

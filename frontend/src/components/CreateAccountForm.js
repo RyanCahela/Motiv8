@@ -6,7 +6,6 @@ export default class CreateAccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
       username: '',
       password: '',
       passwordConfirm: '',
@@ -18,14 +17,9 @@ export default class CreateAccountForm extends Component {
   handleTextInput(e) {
     console.log(e.target.id);
     switch (e.target.id) {
-      case 'email-input':
-        this.setState({
-          email: e.target.value
-        })
-        break;
       case 'username-input':
         this.setState({
-          userName: e.target.value
+          username: e.target.value
         })
         break;
       case 'password-input':
@@ -51,11 +45,6 @@ export default class CreateAccountForm extends Component {
             <>
               <h3>Create An Account</h3>
               <form className="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
-              <label htmlFor="email-input">Email:</label>
-                <input 
-                  id="email-input"
-                  type="text"
-                  onChange={(e) => this.handleTextInput(e)}/>
 
                 <label htmlFor="username-input">Username:</label>
                 <input 

@@ -5,7 +5,7 @@ const quotesRouter = express.Router();
 
 quotesRouter
   .route('/')
-  .get((req, res, next) => {
+  .get((req, res) => {
 
     const randomNumArray = generateRandomNumArrayWithLength(30);
 
@@ -19,5 +19,8 @@ quotesRouter
       return Array.from({length: length}, () => Math.floor(Math.random() * ID_RANGE));
     }
   })
+  .post((req, res) => {
+    
+  });
 
 module.exports = quotesRouter;

@@ -15,6 +15,7 @@ userRouter.route('/')
   .post(jsonParser, (req, res, next) => {
     //create user
     const { username, password } = req.body;
+    console.log(username);
 
     UsersServices.checkIfUserExists(this.db, username)
       .then(userExists => {

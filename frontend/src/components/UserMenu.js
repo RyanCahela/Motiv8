@@ -7,7 +7,7 @@ export default function UserMenu(props) {
 
   return (
     <UserContext.Consumer>
-      {({ state }) => {
+      {({ state, methods }) => {
           return (
             <ul>
               <li>
@@ -17,7 +17,7 @@ export default function UserMenu(props) {
                 <Link to={'/quotes'}>Quote Generator</Link>
               </li>
               <li>
-                <Link to={`/logout/${state.userId}`}>Log Out</Link>
+                <Link to={'/'} onClick={() => methods.handleLogout()}>Log Out</Link>
               </li>
             </ul>
           )

@@ -1,18 +1,25 @@
 import React from 'react'
 import { QuoteContext } from '../contexts/QuoteContextManager';
+import { UserContext } from '../contexts/UserContextManager';
 
-export default function QuoteNav(props) {
+export default function QuoteNav() {
   return (
-    <QuoteContext.Consumer>
-      {({ methods }) => {
+    <UserContext.Consumer>
+      {({ state }) => {
         return (
-          <div>
-            <button onClick={() => methods.handleUndo()}>Undo</button>
-            <button onClick={() => methods.handleRandomize()}>Randomize</button>
-            <button onClick={() => methods.handleSaveQuote()}>Save</button>
-          </div>
+          <QuoteContext.Consumer>
+            {({ methods }) => {
+              return (
+                <div>
+                  <button onClick={() => methods.handleUndo()}>Undo</button>
+                  <button onClick={() => methods.handleRandomize()}>Randomize</button>
+                  <button onClick={() => methods.handleSaveQuote(state.userId)}>Save</button>
+                </div>
+              )
+            }}
+          </QuoteContext.Consumer>
         )
       }}
-    </QuoteContext.Consumer>
+    </UserContext.Consumer>
   )
 }

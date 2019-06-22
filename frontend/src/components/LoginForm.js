@@ -5,7 +5,8 @@ export default class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      username: '',
+      password: ''
     }
   }
 
@@ -35,7 +36,7 @@ export default class LoginForm extends Component {
           return (
             <>
             <h3>Sign In</h3>
-            <form className="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
+            <form className="input-form" onSubmit={(e) => methods.handleLogin(e, this.state)}>
               <label htmlFor="username-input">Username:</label>
               <input 
                 id="username-input"

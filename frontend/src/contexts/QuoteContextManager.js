@@ -1,6 +1,5 @@
 import React from 'react';
 import fontPairings from '../fonts/fontPairings';
-import quotes from '../quotes/quotes';
 import IteratorServices from '../services/IteratorServices';
 
 const QuoteContext = React.createContext();
@@ -10,7 +9,7 @@ class QuoteContextManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quotes: [...quotes],
+      quotes: [],
       currentQuote: '',
       backgroundImageUrls: [],
       fontPairings: [...fontPairings],
@@ -26,13 +25,14 @@ class QuoteContextManager extends React.Component {
     this.handleRandomize = this.handleRandomize.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
+    this.handleSaveQuote = this.handleSaveQuote.bind(this);
   }
 
 
   componentDidMount() {
     this.getBackgroundImages(30)
+    this.getQuotes(30)
     this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
-    this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
   }
   
   handleRandomize() {
@@ -76,8 +76,28 @@ class QuoteContextManager extends React.Component {
     }
   }
 
-  handleSaveQuote() {
+  handleSaveQuote(userId) {
     //TODO sends current quote config to favorites db table.
+
+    const data = {
+      backgroundImageUrl: this.state.backgroundImageUrl,
+      quoteId: this.state.currentQuote.id,
+      bodyFont: this.state.fontPair.body,
+      authorFont: this.state.fontPair.author,
+      userId: userId,
+    }
+    console.log(data);
+
+    fetch('http://localhost:8000/api/savedQuotes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      console.log(res.status);
+    })
   }
 
   handleCheckboxCheck(e) {
@@ -109,10 +129,7 @@ class QuoteContextManager extends React.Component {
   }
   
   //HELPER FUNCTIONS
-  getBackgroundImages(numberOfImages) {
-    if(numberOfImages > 30) {
-      numberOfImages = 30;
-    }
+  getBackgroundImages(numberOfImages = 30) {
     fetch(`https://api.unsplash.com/photos/random?count=${numberOfImages}`, {
       headers: {
         Authorization: `Client-ID ${process.env.REACT_APP_API_KEY}`
@@ -130,6 +147,22 @@ class QuoteContextManager extends React.Component {
         this.handleRandomize();
       })
     });
+  }
+
+  getQuotes(numberOfQuotes = 30) {
+    //TODO make quotes route dynamic to accept numberOfQuotes param
+    fetch('http://localhost:8000/api/quotes')
+    .then(quotes => quotes.json())
+    .then(quotes => {
+      this.setState({
+        quotes: quotes
+      },
+      //runs after setState
+      () => {
+        this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
+      }
+      )
+    })
   }
   
   iterateBackgroundUrl({value, done}) {
@@ -173,8 +206,7 @@ class QuoteContextManager extends React.Component {
       })
     }
     else {
-      this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
-      this.iterateQuote(this.quoteItObj.next());
+      this.getQuotes(30);
     }
   }
 

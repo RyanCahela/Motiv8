@@ -11,9 +11,23 @@ saveQuoteRouter.route('/')
     next();
   })
   .post(jsonParser, (req, res) => {
-    const { userid } = req.body; 
+    console.log('post recieved');
+    const {
+      backgroundImageUrl,
+      quoteId,
+      bodyFont,
+      authorFont,
+      userId
+    } = req.body;
+    const quoteToInsert = {
+      backgroundimageurl: backgroundImageUrl,
+      quoteid: quoteId,
+      bodyfont: bodyFont,
+      authorfont: authorFont,
+      userid: userId
+    }
     SaveQuoteServices
-      .saveQuote(this.db, userid)
+      .saveQuote(this.db, quoteToInsert)
       .then(quoteThatWasSaved => {
         res.status(201).send();
       })
