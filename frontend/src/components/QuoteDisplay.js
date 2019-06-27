@@ -4,16 +4,12 @@ import { QuoteContext } from '../contexts/QuoteContextManager';
 
 export default class QuoteDisplay extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
   }
 
   render() {
     return (
-      <QuoteContext>
+      <QuoteContext.Consumer>
         {({ state }) => {
           const dynamicBackgroundStyles = {
             backgroundSize: 'cover',
@@ -38,7 +34,7 @@ export default class QuoteDisplay extends React.Component {
             </div>
           )
         }}
-      </QuoteContext>
+      </QuoteContext.Consumer>
     )
   }
 }

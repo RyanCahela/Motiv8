@@ -3,6 +3,7 @@ const SaveQuoteServices = {
     console.log(userId);
     return dbInstance
             .from('savedquotes')
+            .join('quotes', 'savedquotes.quoteid', '=', 'quotes.id')
             .select('*')
             .where({'userid': userId });
   },

@@ -2,6 +2,7 @@ const express = require('express');
 const UsersServices = require('./UsersServices');
 const path = require('path');
 const requireAuth = require('../middleware/jwt-auth');
+const savesQuotesServices = require('../save/saveQuoteServices');
 
 const userRouter = express.Router();
 const jsonParser = express.json();
@@ -44,15 +45,14 @@ userRouter.route('/')
   })
 
 userRouter
-  .route('/:username')
+  .route('/:userId')
   .all(requireAuth)
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
   })
   .get((req, res) => {
-    const { id } = req.user;
-    res.status(200).json({ id });
+    savesQuotesServices.getSavedQuotesById(this.db, req.params.userId)
   })
 
 module.exports = userRouter;

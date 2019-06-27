@@ -8,9 +8,10 @@ export default function FavoritesList({ history }) {
     <UserContext.Consumer>
       {({ methods, state }) => {
 
-        let favoritesList = state.favoritesList.map((quote) => {
+
+        let favoritesList = state.savedQuotes.map((quote) => {
           return (
-              <FavoritesListItem quote={quote} onClick={() => methods.handleFavoritesListItemClick(quote)}/>
+              <FavoritesListItem key={quote.id} quote={quote} onClick={() => methods.handleFavoritesListItemClick(quote)}/>
           )
         })
 

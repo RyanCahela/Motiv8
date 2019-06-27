@@ -34,7 +34,7 @@ export default class Menu extends React.Component {
               <div className="menu">
                 <header>
                   <button onClick={this.toggleMenuIsOpen}>Menu</button>
-                  <span>loggedIn? {`${state.isLoggedIn}`}</span>
+                  <span>{state.isLoggedIn? `${state.username}`: ''}</span>
                 </header>
                 {state.isLoggedIn? <UserMenu /> : <AccountAccessForms />}
               </div>

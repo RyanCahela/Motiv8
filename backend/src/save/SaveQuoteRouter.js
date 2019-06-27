@@ -11,7 +11,6 @@ saveQuoteRouter.route('/')
     next();
   })
   .post(jsonParser, (req, res) => {
-    console.log('post recieved');
     const {
       backgroundImageUrl,
       quoteId,
@@ -41,14 +40,14 @@ saveQuoteRouter.route('/')
       })
   })
 
-saveQuoteRouter.route('/:userId')
+saveQuoteRouter.route('/:username')
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
   })
   .get((req,res) => {
     SaveQuoteServices
-      .getSavedQuotesByUserId(this.db, req.params.userId)
+      .getSavedQuotesByUserId(this.db, req.params.username)
       .then(savedQuotes => {
         res.status(200).json(savedQuotes);
       })

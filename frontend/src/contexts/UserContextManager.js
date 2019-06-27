@@ -9,10 +9,8 @@ class UserContextManager extends Component {
     this.state = {
       isLoggedIn: false,
       username: '',
-      password: '',
-      email: '',
       userId: 0,
-      favoritesList: []
+      savedQuotes: []
     }
 
     this.handleCreateAccountSubmit = this.handleCreateAccountSubmit.bind(this);
@@ -59,10 +57,13 @@ class UserContextManager extends Component {
     .then(res => res.json())
     .then(res => {
       //TODO build token services for crud on tokens to refresh
+      console.log('login res', res);
       window.localStorage.setItem('motiv8-jwt', res.authToken)
       this.setState({
         isLoggedIn: true,
-        userId: res.userId
+        username: userInfo.username,
+        userId: res.userId,
+        savedQuotes: res.savedQuotes
       })
     })
   }
@@ -72,6 +73,13 @@ class UserContextManager extends Component {
     this.setState({
       isLoggedIn: false
     })
+  }
+
+  getUpdatedFavoritesList(username) {
+    fetch(`http://localhost:8000/api/savedQuotes/${username}`)
+      .then(res => {
+        console.log(res);
+      })
   }
 
   render() {

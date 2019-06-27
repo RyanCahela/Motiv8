@@ -86,7 +86,6 @@ class QuoteContextManager extends React.Component {
       authorFont: this.state.fontPair.author,
       userId: userId,
     }
-    console.log(data);
 
     fetch('http://localhost:8000/api/savedQuotes', {
       method: 'POST',
@@ -137,7 +136,6 @@ class QuoteContextManager extends React.Component {
     })
     .then(res => res.json())
     .then(resJson => {
-      console.log(resJson);
       this.setState({
         backgroundImageUrls: resJson,
       },

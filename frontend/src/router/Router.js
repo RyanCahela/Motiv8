@@ -14,7 +14,7 @@ export default function Router(props) {
         <Route path="/" exact component={LandingPage} />
         <Route path="/quotes" component={QuoteEditorPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/user/:userId" component={UserProfilePage} />
+        <Route path="/user/:username" component={UserProfilePage} />
       </Switch>
     </BrowserRouter>
   )

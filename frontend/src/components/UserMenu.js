@@ -11,7 +11,7 @@ export default function UserMenu(props) {
           return (
             <ul>
               <li>
-                <Link to={`/user/${state.id}`}>Profile</Link>
+                <Link to={`/user/${state.username}`}>Profile</Link>
               </li>
               <li>
                 <Link to={'/quotes'}>Quote Generator</Link>

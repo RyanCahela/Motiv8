@@ -1,0 +1,2 @@
+sql query 
+select * from savedquotes join quotes on savedquotes.quoteid=quotes.id where userid=1

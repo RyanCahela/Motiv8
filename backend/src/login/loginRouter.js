@@ -1,10 +1,11 @@
 const express = require('express');
-const AuthServices = require('./AuthServices');
+const AuthServices = require('./LoginServices');
+const SavedQuoteServices = require('../save/saveQuoteServices');
 
-const AuthRouter = express.Router();
+const LoginRouter = express.Router();
 const jsonParser = express.json();
 
-AuthRouter.route('/')
+LoginRouter.route('/')
   .post(jsonParser, (req, res, next) => {
     console.log('req.body', req.body);
     const { username, password } = req.body;
@@ -27,14 +28,21 @@ AuthRouter.route('/')
         //verify req password matches password stored in db.
         return AuthServices.comparePasswords(userCredentials.password, dbUser.password)
                 .then(isMatch => {
+                  console.log('isMatch', isMatch);
                   if(!isMatch) return res.status(400).json({error: 'Incorrect password'});
-                  //create jwt
-                  const subject = dbUser.username;
-                  const payload = { user_id: dbUser.id };
-                  res.send({
-                    authToken: AuthServices.createJwt(subject, payload),
-                    userId: dbUser.id
-                  })
+                  //get saved quotes for user
+                  SavedQuoteServices.getSavedQuotesByUserId(req.app.get('db'), dbUser.id)
+                  .then(savedQuotes => {
+                    //create jwt
+                    const subject = dbUser.username;
+                    const payload = { user_id: dbUser.id };
+                    res.send({
+                      authToken: AuthServices.createJwt(subject, payload),
+                      userId: dbUser.id,
+                      savedQuotes: savedQuotes
+                    })
+
+                    })
                 })
       })
     //send jwt back to client
@@ -47,4 +55,4 @@ AuthRouter.route('/')
 
 
 
-module.exports = AuthRouter;
+module.exports = LoginRouter;
