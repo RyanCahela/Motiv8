@@ -1,12 +1,10 @@
 import React from 'react'
-import Menu from '../components/Menu';
 import FavoritesList from '../components/FavoritesList.js';
-import AccountDetails from '../components/AccountDetails';
-import { UserContext } from '../contexts/UserContextManager';
+import '../css/UserProfilePage.css';
 
 export default function UserProfilePage({ match, history }) {
   return (
-    <div>
+    <div className="container">
       <FavoritesList history={history}/>
     </div>
   )

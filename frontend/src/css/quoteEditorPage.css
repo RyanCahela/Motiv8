@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+}
+
+.QuoteControls-checkbox-group {
+  display: flex;
+}
+
+.QuoteControls-checkbox-group input {
+  display: none;
+}
+
+#keep-quote-checkbox:checked + label {
+  background-color: lightcoral;
+}
+
+#keep-fonts-checkbox:checked + label {
+  background-color: lightblue;
+}
+
+#keep-background-checkbox:checked + label {
+  background-color: lightgreen;
+}
+
+@media only screen and (min-width: 600px) {
+  .container {
+    width: 70%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
