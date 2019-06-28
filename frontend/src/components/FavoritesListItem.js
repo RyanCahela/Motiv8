@@ -1,10 +1,17 @@
 import React from 'react'
+import { QuoteContext } from '../contexts/QuoteContextManager';
 
-export default function FavoritesListItem({ quote }) {
+export default function FavoritesListItem(props) {
   return (
-    <li>
-      <p>{quote.quote}</p>
-      <p>{quote.author}</p>
-    </li>
+    <QuoteContext.Consumer>
+      {({ methods }) => {
+        return (
+          <li onClick={() => methods.handleFavoritesListItemClick(props.quote, props.history)}>
+            <p>{props.quote.quote}</p>
+            <p>{props.quote.author}</p>
+          </li>
+        )
+      }}
+    </QuoteContext.Consumer>
   )
 }

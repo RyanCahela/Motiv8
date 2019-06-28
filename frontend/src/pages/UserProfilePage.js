@@ -8,7 +8,6 @@ export default function UserProfilePage({ match, history }) {
   return (
     <div>
       <FavoritesList history={history}/>
-      <AccountDetails />
     </div>
   )
 }

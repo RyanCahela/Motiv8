@@ -5,7 +5,8 @@ import { UserContext } from '../contexts/UserContextManager';
 export default function QuoteNav() {
   return (
     <UserContext.Consumer>
-      {({ state }) => {
+      {({ state, methods }) => {
+        let userMethods = methods;
         return (
           <QuoteContext.Consumer>
             {({ methods }) => {
@@ -13,7 +14,7 @@ export default function QuoteNav() {
                 <div>
                   <button onClick={() => methods.handleUndo()}>Undo</button>
                   <button onClick={() => methods.handleRandomize()}>Randomize</button>
-                  <button onClick={() => methods.handleSaveQuote(state.userId)}>Save</button>
+                  <button onClick={() => methods.handleSaveQuote(state.userId, userMethods.getUpdatedSavedQuotes)}>Save</button>
                 </div>
               )
             }}

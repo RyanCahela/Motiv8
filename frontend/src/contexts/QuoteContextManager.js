@@ -1,6 +1,7 @@
 import React from 'react';
 import fontPairings from '../fonts/fontPairings';
 import IteratorServices from '../services/IteratorServices';
+import { thisTypeAnnotation } from '@babel/types';
 
 const QuoteContext = React.createContext();
 
@@ -26,6 +27,7 @@ class QuoteContextManager extends React.Component {
     this.handleUndo = this.handleUndo.bind(this);
     this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
     this.handleSaveQuote = this.handleSaveQuote.bind(this);
+    this.handleFavoritesListItemClick = this.handleFavoritesListItemClick.bind(this);
   }
 
 
@@ -76,8 +78,13 @@ class QuoteContextManager extends React.Component {
     }
   }
 
-  handleSaveQuote(userId) {
+  handleSaveQuote(userId, getUpdatedSavedQuotes) {
     //TODO sends current quote config to favorites db table.
+
+    if(userId === 0) {
+      console.log('please log in');
+      return;
+    }
 
     const data = {
       backgroundImageUrl: this.state.backgroundImageUrl,
@@ -96,6 +103,7 @@ class QuoteContextManager extends React.Component {
     })
     .then(res => {
       console.log(res.status);
+      getUpdatedSavedQuotes(userId);
     })
   }
 
@@ -125,6 +133,18 @@ class QuoteContextManager extends React.Component {
       default:
         console.log('Something went wrong with the switch');
     }
+  }
+
+  handleFavoritesListItemClick(quote, history) {
+    console.log('handleFavoritesListIemClick ran');
+    console.log(quote);
+    console.log('history', history);
+    this.setState({
+      currentQuote: quote,
+      backgroundImageUrl: quote.backgroundimageurl
+    }, () => {
+      history.push('/quotes');
+    })
   }
   
   //HELPER FUNCTIONS
@@ -216,7 +236,8 @@ class QuoteContextManager extends React.Component {
         handleCheckboxCheck: this.handleCheckboxCheck,
         handleRandomize: this.handleRandomize,
         handleUndo: this.handleUndo,
-        handleSaveQuote: this.handleSaveQuote
+        handleSaveQuote: this.handleSaveQuote,
+        handleFavoritesListItemClick: this.handleFavoritesListItemClick
       }
     }
 

@@ -16,6 +16,7 @@ class UserContextManager extends Component {
     this.handleCreateAccountSubmit = this.handleCreateAccountSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.getUpdatedSavedQuotes = this.getUpdatedSavedQuotes.bind(this);
   }
 
   handleCreateAccountSubmit(e, userInfo) {
@@ -71,14 +72,21 @@ class UserContextManager extends Component {
   handleLogout() {
     window.localStorage.removeItem('motiv8-jwt');
     this.setState({
-      isLoggedIn: false
+      isLoggedIn: false,
+      userId: 0,
+      username: '',
+      savedQuotes: []
     })
   }
 
-  getUpdatedFavoritesList(username) {
-    fetch(`http://localhost:8000/api/savedQuotes/${username}`)
-      .then(res => {
-        console.log(res);
+  getUpdatedSavedQuotes(userId) {
+    fetch(`http://localhost:8000/api/savedQuotes/${userId}`)
+      .then(res => res.json())
+      .then(updatedQuotesList => {
+        console.log('updated saved quotes', updatedQuotesList)
+        this.setState({
+          savedQuotes: updatedQuotesList
+        })
       })
   }
 
@@ -87,7 +95,8 @@ class UserContextManager extends Component {
       methods: {
         handleCreateAccountSubmit: this.handleCreateAccountSubmit,
         handleLogin: this.handleLogin,
-        handleLogout: this.handleLogout
+        handleLogout: this.handleLogout,
+        getUpdatedSavedQuotes: this.getUpdatedSavedQuotes,
       },
       state: this.state
     }
