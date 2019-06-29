@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContextManager';
 
 
@@ -9,16 +9,22 @@ export default function UserMenu(props) {
     <UserContext.Consumer>
       {({ state, methods }) => {
           return (
-            <ul>
-              <li>
-                <Link to={`/user/${state.username}`}>Profile</Link>
-              </li>
-              <li>
-                <Link to={'/quotes'}>Quote Generator</Link>
-              </li>
-              <li>
-                <Link to={'/'} onClick={() => methods.handleLogout()}>Log Out</Link>
-              </li>
+            <ul class="user-menu">
+              <NavLink className="user-menu__list-item__link" to={`/user/${state.username}`}>
+                <li class="user-menu__list-item">
+                  Profile
+                </li>
+              </NavLink>
+              <NavLink className="user-menu__list-item__link" to={'/quotes'}>
+                <li className="user-menu__list-item">
+                  Quote Generator
+                </li>
+              </NavLink>
+              <NavLink className="user-menu__list-item__link" to={'/'} onClick={() => methods.handleLogout()}>
+                <li className="user-menu__list-item">
+                  Log Out
+                </li>
+              </NavLink>
             </ul>
           )
       }}

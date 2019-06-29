@@ -43,28 +43,28 @@ export default class CreateAccountForm extends Component {
         {({ methods }) => {
           return (
             <>
-              <h3>Create An Account</h3>
-              <form className="input-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
+              <h3 className="create-account-heading">Create An Account</h3>
+              <form className="create-account-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
 
-                <label htmlFor="username-input">Username:</label>
+                <label className="create-account-form__label" htmlFor="username-input">Username:</label>
                 <input 
                   id="create-username-input"
                   type="text"
                   onChange={(e) => this.handleTextInput(e)}/>
 
-                <label htmlFor="password-input">Password:</label>
+                <label className="create-account-form__label" htmlFor="password-input">Password:</label>
                 <input 
                   id="create-password-input" 
                   type="password" 
                   onChange={(e) => this.handleTextInput(e)} />
 
-                <label htmlFor="password-confirm-input">Confirm Password</label>
+                <label className="create-account-form__label" htmlFor="password-confirm-input">Confirm Password</label>
                 <input 
                   id="create-password-confirm-input" 
                   type="password" 
                   onChange={(e) => this.handleTextInput(e)}/>
 
-                <input type="submit" />
+                <input className="create-account-form__submit" type="submit" value="Create Account"/>
               </form>
             </>
           )

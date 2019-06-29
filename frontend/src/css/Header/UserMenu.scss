@@ -1,0 +1,28 @@
+.user-menu {
+  background-color: $menu-bg-color;
+  color: $menu-text-color;
+  height: 100%;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  padding-top: 70px;
+  position: absolute;
+  top: 0;
+  width: 200px;
+}
+
+.user-menu__list-item {
+  font-size: $l-font-size;
+  padding: 30px 20px;
+  text-decoration: none;
+}
+
+.user-menu__list-item:hover {
+  background: darkblue;
+}
+
+.user-menu__list-item__link {
+  color: $menu-text-color;
+  text-decoration: none;
+}

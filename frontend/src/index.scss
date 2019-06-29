@@ -1,11 +1,6 @@
+@import './css/base/vars.scss';
+@import './css/base/base.scss';
 @import './css/container/container.scss';
-@import './css/UserProfilePage/userProfilePage.scss';
+@import './css/UserProfilePage/UserProfilePage.scss';
 @import './css/QuoteEditorPage/QuoteEditorPage.scss';
-@import './css/Menu/Menu.scss';
-
-
-
-body {
-  margin: 0;
-  font-family: 'Work Sans', sans-serif;
-}
+@import './css/Header/Header.scss';
