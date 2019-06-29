@@ -1,21 +1,11 @@
+.favorites-list-heading {
+  color: $menu-text-color;
+  font-size: $l-font-size;
+  text-align: center;
+  margin: 5px 0;
+}
+
 .favorites-list {
   list-style: none;
   padding-left: 0;
-}
-
-.favorites-list-item {
-  display: flex;
-  justify-content: space-between;
-  background-color: lightgray;
-  border: 1px solid darkgrey;
-  transition: background-color .3s ease-in-out;
-}
-
-.favorites-list-item:hover {
-  background-color: darkgrey;
-}
-
-.favorites-list-item-img {
-  width: 100px;
-  height: 100px;
 }

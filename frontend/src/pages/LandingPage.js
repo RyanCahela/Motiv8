@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="landing-page-container">
       <h1>Welcome to Motiv8</h1>  
         <main>
           <h2>Customize your inspiration</h2>

@@ -16,7 +16,7 @@ export default function FavoritesList({ history }) {
 
         return (
           <>
-          <h3>Favorites</h3>
+          <h3 className="favorites-list-heading">Favorites</h3>
           <ul className="favorites-list">
             { favoritesList }
           </ul>

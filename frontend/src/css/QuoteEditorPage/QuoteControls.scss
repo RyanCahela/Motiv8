@@ -1,19 +1,38 @@
-.QuoteControls-checkbox-group {
+.quote-controls-container {
+  background-color: $menu-bg-color;
+  color: $menu-text-color;
+}
+
+.quote-controls-heading {
+  font-size: $l-font-size;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.quote-controls {
   display: flex;
 }
 
-.QuoteControls-checkbox-group input {
+.quote-controls input {
   display: none;
 }
 
 #keep-quote-checkbox:checked + label {
-  background-color: lightcoral;
+  background-color: $main-accent-color;
 }
 
 #keep-fonts-checkbox:checked + label {
-  background-color: lightblue;
+  background-color: $main-accent-color;
 }
 
 #keep-background-checkbox:checked + label {
-  background-color: lightgreen;
+  background-color: $main-accent-color;
+}
+
+.quote-controls__label {
+  font-size: $m-font-size;
+  padding: 10px 0;
+  text-align: center;
+  outline: 1px solid white;
+  flex-grow: 1;
 }

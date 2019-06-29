@@ -11,10 +11,10 @@ export default function QuoteNav() {
           <QuoteContext.Consumer>
             {({ methods }) => {
               return (
-                <div>
-                  <button onClick={() => methods.handleUndo()}>Undo</button>
-                  <button onClick={() => methods.handleRandomize()}>Randomize</button>
-                  <button onClick={() => methods.handleSaveQuote(state.userId, userMethods.getUpdatedSavedQuotes)}>Save</button>
+                <div className="quote-nav-container">
+                  <button className="quote-nav__button randomize-button" onClick={() => methods.handleRandomize()}>Randomize</button>
+                  <button className="quote-nav__button undo-button" onClick={() => methods.handleUndo()}>Undo</button>
+                  <button className="quote-nav__button save-button" onClick={() => methods.handleSaveQuote(state.userId, userMethods.getUpdatedSavedQuotes)}>Save</button>
                 </div>
               )
             }}
