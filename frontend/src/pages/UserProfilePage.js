@@ -1,6 +1,5 @@
 import React from 'react'
-import FavoritesList from '../components/FavoritesList.js';
-import '../css/UserProfilePage.css';
+import FavoritesList from '../components/UserProfilePage/FavoritesList.js';
 
 export default function UserProfilePage({ match, history }) {
   return (

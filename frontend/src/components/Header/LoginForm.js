@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { UserContext } from '../contexts/UserContextManager';
+import { UserContext } from '../../contexts/UserContextManager';
 
 export default class LoginForm extends Component {
   constructor(props) {

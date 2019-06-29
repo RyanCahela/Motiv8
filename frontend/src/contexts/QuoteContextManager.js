@@ -1,7 +1,6 @@
 import React from 'react';
 import fontPairings from '../fonts/fontPairings';
 import IteratorServices from '../services/IteratorServices';
-import { thisTypeAnnotation } from '@babel/types';
 
 const QuoteContext = React.createContext();
 

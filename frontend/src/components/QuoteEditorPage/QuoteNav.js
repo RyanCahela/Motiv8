@@ -1,6 +1,6 @@
 import React from 'react'
-import { QuoteContext } from '../contexts/QuoteContextManager';
-import { UserContext } from '../contexts/UserContextManager';
+import { QuoteContext } from '../../contexts/QuoteContextManager';
+import { UserContext } from '../../contexts/UserContextManager';
 
 export default function QuoteNav() {
   return (

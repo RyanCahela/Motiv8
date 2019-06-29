@@ -1,6 +1,6 @@
 import React from 'react'
-import { UserContext } from '../contexts/UserContextManager';
-import FavoritesListItem from '../components/FavoritesListItem';
+import { UserContext } from '../../contexts/UserContextManager';
+import FavoritesListItem from './FavoritesListItem';
 
 export default function FavoritesList({ history }) {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContextManager';
+import { UserContext } from '../../contexts/UserContextManager';
 
 
 export default function UserMenu(props) {

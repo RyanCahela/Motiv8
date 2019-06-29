@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import { QuoteContextManager } from './contexts/QuoteContextManager';
 import { UserContextManager } from './contexts/UserContextManager';
 import Router from './router/Router';

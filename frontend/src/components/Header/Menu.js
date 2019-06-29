@@ -1,8 +1,7 @@
 import React from 'react';
 import AccountAccessForms from './AccountAccessForms';
-import '../css/Menu.css';
 import UserMenu from './UserMenu';
-import { UserContext } from '../contexts/UserContextManager';
+import { UserContext } from '../../contexts/UserContextManager';
 
 export default class Menu extends React.Component {
 

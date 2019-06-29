@@ -1,6 +1,5 @@
 import React from 'react';
-import '../css/QuoteDisplay.css';
-import { QuoteContext } from '../contexts/QuoteContextManager';
+import { QuoteContext } from '../../contexts/QuoteContextManager';
 
 export default class QuoteDisplay extends React.Component {
 

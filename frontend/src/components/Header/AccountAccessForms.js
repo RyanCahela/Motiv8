@@ -1,6 +1,6 @@
 import React from 'react'
-import LoginForm from '../components/LoginForm';
-import CreateAccountForm from '../components/CreateAccountForm';
+import LoginForm from './LoginForm';
+import CreateAccountForm from './CreateAccountForm';
 
 export default function AccountAccessForms() {
   return (

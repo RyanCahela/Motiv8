@@ -1,8 +1,7 @@
 import React from 'react'
-import QuoteDisplay from '../components/QuoteDisplay';
-import QuoteControls from '../components/QuoteControls';
-import QuoteNav from '../components/QuoteNav';
-import '../css/quoteEditorPage.css';
+import QuoteDisplay from '../components/QuoteEditorPage/QuoteDisplay';
+import QuoteControls from '../components/QuoteEditorPage/QuoteControls';
+import QuoteNav from '../components/QuoteEditorPage/QuoteNav';
 
 export default function QuoteEditorPage() {
   return (

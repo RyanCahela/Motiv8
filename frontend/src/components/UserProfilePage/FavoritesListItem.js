@@ -1,5 +1,5 @@
 import React from 'react'
-import { QuoteContext } from '../contexts/QuoteContextManager';
+import { QuoteContext } from '../../contexts/QuoteContextManager';
 
 export default function FavoritesListItem(props) {
   return (
@@ -21,7 +21,7 @@ export default function FavoritesListItem(props) {
               <p style={quoteFont}>{props.quote.quote}</p>
               <p style={authorFont}>{props.quote.author}</p>
             </div>
-            <img className="favorites-list-item-img" src={props.quote.backgroundimageurl}></img>
+            <img className="favorites-list-item-img" alt='' src={props.quote.backgroundimageurl}></img>
           </li>
         )
       }}

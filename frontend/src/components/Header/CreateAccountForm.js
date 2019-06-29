@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { UserContext } from '../contexts/UserContextManager';
+import { UserContext } from '../../contexts/UserContextManager';
 
 export default class CreateAccountForm extends Component {
 
@@ -17,17 +17,17 @@ export default class CreateAccountForm extends Component {
   handleTextInput(e) {
     console.log(e.target.id);
     switch (e.target.id) {
-      case 'username-input':
+      case 'create-username-input':
         this.setState({
           username: e.target.value
         })
         break;
-      case 'password-input':
+      case 'create-password-input':
         this.setState({
           password: e.target.value
         })
         break;
-      case 'password-confirm-input':
+      case 'create-password-confirm-input':
         this.setState({
           passwordConfirm: e.target.value
         })
@@ -48,19 +48,19 @@ export default class CreateAccountForm extends Component {
 
                 <label htmlFor="username-input">Username:</label>
                 <input 
-                  id="username-input"
+                  id="create-username-input"
                   type="text"
                   onChange={(e) => this.handleTextInput(e)}/>
 
                 <label htmlFor="password-input">Password:</label>
                 <input 
-                  id="password-input" 
+                  id="create-password-input" 
                   type="password" 
                   onChange={(e) => this.handleTextInput(e)} />
 
                 <label htmlFor="password-confirm-input">Confirm Password</label>
                 <input 
-                  id="password-confirm-input" 
+                  id="create-password-confirm-input" 
                   type="password" 
                   onChange={(e) => this.handleTextInput(e)}/>
 
