@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { UserContext } from '../../contexts/UserContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class LoginForm extends Component {
   render() {
 
     return (
-      <UserContext.Consumer>
+      <GlobalContext.Consumer>
         {({methods}) => {
           return (
             <div>
@@ -54,7 +54,7 @@ export default class LoginForm extends Component {
             </div>
           )
         }}
-      </UserContext.Consumer>
+      </GlobalContext.Consumer>
     )
   }
 }

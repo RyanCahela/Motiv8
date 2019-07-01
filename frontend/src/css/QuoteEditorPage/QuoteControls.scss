@@ -11,6 +11,7 @@
 
 .quote-controls {
   display: flex;
+  
 }
 
 .quote-controls input {
@@ -18,21 +19,25 @@
 }
 
 #keep-quote-checkbox:checked + label {
-  background-color: $main-accent-color;
+  background-color: $dark-accent-color;
 }
 
 #keep-fonts-checkbox:checked + label {
-  background-color: $main-accent-color;
+  background-color: $dark-accent-color;
 }
 
 #keep-background-checkbox:checked + label {
-  background-color: $main-accent-color;
+  background-color: $dark-accent-color;
 }
 
 .quote-controls__label {
+  align-items: center;
+  background-color: $main-accent-color;
+  display: flex;
   font-size: $m-font-size;
-  padding: 10px 0;
+  padding: 10px;
   text-align: center;
-  outline: 1px solid white;
+  outline: 1px solid $menu-bg-color;
   flex-grow: 1;
+  transition: background-color .3s ease-in-out;
 }

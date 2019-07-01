@@ -1,9 +1,9 @@
 import React from 'react'
-import { QuoteContext } from '../../contexts/QuoteContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 
 export default function FavoritesListItem(props) {
   return (
-    <QuoteContext.Consumer>
+    <GlobalContext.Consumer>
       {({ methods }) => {
 
         const quoteFont={
@@ -25,6 +25,6 @@ export default function FavoritesListItem(props) {
           </li>
         )
       }}
-    </QuoteContext.Consumer>
+    </GlobalContext.Consumer>
   )
 }

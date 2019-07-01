@@ -2,13 +2,14 @@ import React from 'react';
 import fontPairings from '../fonts/fontPairings';
 import IteratorServices from '../services/IteratorServices';
 
-const QuoteContext = React.createContext();
+const GlobalContext = React.createContext();
 
-class QuoteContextManager extends React.Component {
+class GlobalContextManager extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      //quote info
       quotes: [],
       currentQuote: '',
       backgroundImageUrls: [],
@@ -20,6 +21,12 @@ class QuoteContextManager extends React.Component {
       keepBackground: false,
       keepFonts: false,
       keepQuote: false,
+
+      //user info
+      isLoggedIn: false,
+      username: '',
+      userId: 0,
+      savedQuotes: []
     }
 
     this.handleRandomize = this.handleRandomize.bind(this);
@@ -27,13 +34,30 @@ class QuoteContextManager extends React.Component {
     this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
     this.handleSaveQuote = this.handleSaveQuote.bind(this);
     this.handleFavoritesListItemClick = this.handleFavoritesListItemClick.bind(this);
+
+    //user info methods
+    this.handleCreateAccountSubmit = this.handleCreateAccountSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.getUpdatedSavedQuotes = this.getUpdatedSavedQuotes.bind(this);
   }
 
-
+  //QUOTE METHODS
   componentDidMount() {
-    this.getBackgroundImages(30)
-    this.getQuotes(30)
-    this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    let getImages = this.getBackgroundImages(30);
+    let getQuotes = this.getQuotes(30);
+    
+    Promise.all([ getQuotes, getImages ])
+      .then(values => {
+        console.log(values);
+        this.fontPairItObj = IteratorServices.createIterator(this.state.fontPairings);
+        this.handleRandomize();
+      })
+      .catch(err => console.log(err));
   }
   
   handleRandomize() {
@@ -140,46 +164,128 @@ class QuoteContextManager extends React.Component {
     console.log('history', history);
     this.setState({
       currentQuote: quote,
-      backgroundImageUrl: quote.backgroundimageurl
+      backgroundImageUrl: quote.backgroundimageurl,
+      keepBackground: false,
+      keepFonts: false,
+      keepQuote: false
     }, () => {
       history.push('/quotes');
     })
   }
+  //END QUOTE METHODS
+
+
+  //USER METHODS
+  handleCreateAccountSubmit(e, userInfo) {
+    e.preventDefault();
+    console.log(userInfo);
+    const data = {
+      username: userInfo.username,
+      password: userInfo.password
+    }
+
+    fetch('http://localhost:8000/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(resJson => {
+      console.log(resJson);
+    })
+  }
+
+  handleLogin(e, userInfo) {
+    e.preventDefault();
+    console.log(userInfo);
+    const data = {
+      username: userInfo.username,
+      password: userInfo.password
+    }
+
+    fetch('http://localhost:8000/api/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+      //TODO build token services for crud on tokens to refresh
+      console.log('login res', res);
+      window.localStorage.setItem('motiv8-jwt', res.authToken)
+      this.setState({
+        isLoggedIn: true,
+        username: userInfo.username,
+        userId: res.userId,
+        savedQuotes: res.savedQuotes
+      })
+    })
+  }
+
+  handleLogout() {
+    window.localStorage.removeItem('motiv8-jwt');
+    this.setState({
+      isLoggedIn: false,
+      userId: 0,
+      username: '',
+      savedQuotes: []
+    })
+  }
+
+  getUpdatedSavedQuotes(userId) {
+    fetch(`http://localhost:8000/api/savedQuotes/${userId}`)
+      .then(res => res.json())
+      .then(updatedQuotesList => {
+        console.log('updated saved quotes', updatedQuotesList)
+        this.setState({
+          savedQuotes: updatedQuotesList
+        })
+      })
+  }
+  //END USER METHODS
   
   //HELPER FUNCTIONS
   getBackgroundImages(numberOfImages = 30) {
-    fetch(`https://api.unsplash.com/photos/random?count=${numberOfImages}`, {
+    return fetch(`https://api.unsplash.com/photos/random?count=${numberOfImages}`, {
       headers: {
         Authorization: `Client-ID ${process.env.REACT_APP_API_KEY}`
       }
     })
     .then(res => res.json())
     .then(resJson => {
-      this.setState({
-        backgroundImageUrls: resJson,
-      },
-      //runs after setState
-      () => {
-        this.backgroundUrlItObj = IteratorServices.createIterator(this.state.backgroundImageUrls)
-        this.handleRandomize();
+      return new Promise((resolve) => {
+        this.setState({
+          backgroundImageUrls: resJson,
+        },
+        //runs after setState
+        () => {
+          this.backgroundUrlItObj = IteratorServices.createIterator(this.state.backgroundImageUrls);
+          resolve("backgroundUrlItObj Created");
+        })
       })
-    });
+    })
   }
 
   getQuotes(numberOfQuotes = 30) {
     //TODO make quotes route dynamic to accept numberOfQuotes param
-    fetch('http://localhost:8000/api/quotes')
+    return fetch('http://localhost:8000/api/quotes')
     .then(quotes => quotes.json())
     .then(quotes => {
-      this.setState({
-        quotes: quotes
-      },
-      //runs after setState
-      () => {
-        this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
-      }
-      )
-    })
+      return new Promise((resolve) => {
+        this.setState({
+          quotes: quotes
+        },
+        //runs after setState
+        () => {
+          this.quoteItObj = IteratorServices.createIterator(this.state.quotes);
+          resolve("quoteItObj Created");
+        })
+      });
+    });
   }
   
   iterateBackgroundUrl({value, done}) {
@@ -226,26 +332,32 @@ class QuoteContextManager extends React.Component {
       this.getQuotes(30);
     }
   }
+  //END HELPER FUNCTIONS
+
 
   render() {
 
-    const quoteContext = {
+    const globalContext = {
       state: this.state,
       methods: {
         handleCheckboxCheck: this.handleCheckboxCheck,
         handleRandomize: this.handleRandomize,
         handleUndo: this.handleUndo,
         handleSaveQuote: this.handleSaveQuote,
-        handleFavoritesListItemClick: this.handleFavoritesListItemClick
+        handleFavoritesListItemClick: this.handleFavoritesListItemClick,
+        handleCreateAccountSubmit: this.handleCreateAccountSubmit,
+        handleLogin: this.handleLogin,
+        handleLogout: this.handleLogout,
+        getUpdatedSavedQuotes: this.getUpdatedSavedQuotes
       }
     }
 
         
     return (
-      <QuoteContext.Provider value={quoteContext}>
+      <GlobalContext.Provider value={globalContext}>
         {this.props.children}
-      </QuoteContext.Provider>
+      </GlobalContext.Provider>
     );
   }
 }
-export { QuoteContext , QuoteContextManager };
+export { GlobalContext , GlobalContextManager };

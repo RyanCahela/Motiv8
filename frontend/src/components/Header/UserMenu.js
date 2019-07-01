@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 
 
 export default function UserMenu(props) {
 
   return (
-    <UserContext.Consumer>
+    <GlobalContext.Consumer>
       {({ state, methods }) => {
           return (
             <ul class="user-menu">
@@ -28,6 +28,6 @@ export default function UserMenu(props) {
             </ul>
           )
       }}
-    </UserContext.Consumer>
+    </GlobalContext.Consumer>
   )
 }

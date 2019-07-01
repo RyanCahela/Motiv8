@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountAccessForms from './AccountAccessForms';
 import UserMenu from './UserMenu';
-import { UserContext } from '../../contexts/UserContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 
 export default class Menu extends React.Component {
 
@@ -26,7 +26,7 @@ export default class Menu extends React.Component {
 
   render() {
     return (
-      <UserContext.Consumer>
+      <GlobalContext.Consumer>
         {({ state }) => {
           if(this.state.menuIsOpen) {
             return (
@@ -51,7 +51,7 @@ export default class Menu extends React.Component {
           }
         }
         }
-      </UserContext.Consumer>
+      </GlobalContext.Consumer>
     )
   }    
 }

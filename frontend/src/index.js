@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import { QuoteContextManager } from './contexts/QuoteContextManager';
-import { UserContextManager } from './contexts/UserContextManager';
+import { GlobalContextManager } from './contexts/GlobalContextManager';
 import Router from './router/Router';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -10,13 +9,10 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <App>
-    <UserContextManager>
-      <QuoteContextManager>
+      <GlobalContextManager>
         <Router />
-      </QuoteContextManager>
-    </UserContextManager>
+      </GlobalContextManager>
   </App>
-  
   ,document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

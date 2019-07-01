@@ -1,10 +1,10 @@
 import React from 'react'
-import { UserContext } from '../../contexts/UserContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 import FavoritesListItem from './FavoritesListItem';
 
 export default function FavoritesList({ history }) {
   return (
-    <UserContext.Consumer>
+    <GlobalContext.Consumer>
       {({ state }) => {
 
         let favoritesList = state.savedQuotes.map((quote) => {
@@ -23,6 +23,6 @@ export default function FavoritesList({ history }) {
           </>
         )
       }}
-    </UserContext.Consumer>
+    </GlobalContext.Consumer>
   )
 }

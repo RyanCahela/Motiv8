@@ -1,5 +1,5 @@
 import React from 'react';
-import { QuoteContext } from '../../contexts/QuoteContextManager';
+import { GlobalContext } from '../../contexts/GlobalContextManager';
 
 export default class QuoteDisplay extends React.Component {
 
@@ -8,7 +8,7 @@ export default class QuoteDisplay extends React.Component {
 
   render() {
     return (
-      <QuoteContext.Consumer>
+      <GlobalContext.Consumer>
         {({ state }) => {
           const dynamicBackgroundStyles = {
             backgroundSize: 'cover',
@@ -33,7 +33,7 @@ export default class QuoteDisplay extends React.Component {
             </div>
           )
         }}
-      </QuoteContext.Consumer>
+      </GlobalContext.Consumer>
     )
   }
 }
