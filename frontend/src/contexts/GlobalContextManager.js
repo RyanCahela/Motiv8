@@ -1,6 +1,8 @@
 import React from 'react';
 import fontPairings from '../fonts/fontPairings';
 import IteratorServices from '../services/IteratorServices';
+import TokenServices from'../services/TokenServices';
+import jwt from 'jsonwebtoken';
 
 const GlobalContext = React.createContext();
 
@@ -45,6 +47,20 @@ class GlobalContextManager extends React.Component {
   //QUOTE METHODS
   componentDidMount() {
     this.initializeApp();
+    const isLoggedIn = TokenServices.getTokenByKey('motiv8-jwt');
+    if(isLoggedIn) {
+      const {
+        sub: username,
+        userId,
+      } = jwt.decode(isLoggedIn);
+      
+      this.setState({
+        isLoggedIn: true,
+        username: username,
+        userId: userId
+      })
+    }
+
   }
 
   initializeApp() {
@@ -176,6 +192,11 @@ class GlobalContextManager extends React.Component {
 
 
   //USER METHODS
+
+  determineIfUserLoggedIn() {
+
+  }
+
   handleCreateAccountSubmit(e, userInfo) {
     e.preventDefault();
     console.log(userInfo);
@@ -199,7 +220,6 @@ class GlobalContextManager extends React.Component {
 
   handleLogin(e, userInfo) {
     e.preventDefault();
-    console.log(userInfo);
     const data = {
       username: userInfo.username,
       password: userInfo.password
@@ -216,11 +236,14 @@ class GlobalContextManager extends React.Component {
     .then(res => {
       //TODO build token services for crud on tokens to refresh
       console.log('login res', res);
-      window.localStorage.setItem('motiv8-jwt', res.authToken)
+      let decodedToken = jwt.decode(res.authToken);
+      console.log('userId', decodedToken);
+      
+      TokenServices.setToken('motiv8-jwt', res.authToken);
       this.setState({
         isLoggedIn: true,
-        username: userInfo.username,
-        userId: res.userId,
+        username: decodedToken.sub,
+        userId: decodedToken.userId,
         savedQuotes: res.savedQuotes
       })
     })

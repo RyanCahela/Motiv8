@@ -35,14 +35,12 @@ LoginRouter.route('/')
                   .then(savedQuotes => {
                     //create jwt
                     const subject = dbUser.username;
-                    const payload = { user_id: dbUser.id };
+                    const payload = { userId: dbUser.id };
                     res.send({
                       authToken: AuthServices.createJwt(subject, payload),
-                      userId: dbUser.id,
                       savedQuotes: savedQuotes
                     })
-
-                    })
+                  })
                 })
       })
     //send jwt back to client

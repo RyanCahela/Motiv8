@@ -9,7 +9,7 @@ export default function UserMenu(props) {
     <GlobalContext.Consumer>
       {({ state, methods }) => {
           return (
-            <ul class="user-menu">
+            <ul className="user-menu">
               <NavLink className="user-menu__list-item__link" to={`/user/${state.username}`}>
                 <li class="user-menu__list-item">
                   Profile

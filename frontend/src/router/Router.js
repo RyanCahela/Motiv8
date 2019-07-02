@@ -4,6 +4,7 @@ import Menu from '../components/Header/Menu';
 import LandingPage from '../pages/LandingPage';
 import QuoteEditorPage from '../pages/QuoteEditorPage';
 import UserProfilePage from '../pages/UserProfilePage';
+import { GlobalContext } from '../contexts/GlobalContextManager';
 
 export default function Router(props) {
   return (
@@ -12,7 +13,19 @@ export default function Router(props) {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/quotes" component={QuoteEditorPage} />
-        <Route path="/user/:username" component={UserProfilePage} />
+        <GlobalContext.Consumer>
+          {({ state, methods }) => {
+            return (
+              <Route 
+                path="/user/:username" 
+                render={(props) => <UserProfilePage
+                  {...props}
+                  getUpdatedSavedQuotes={methods.getUpdatedSavedQuotes}
+                  userId={state.userId}/>} 
+                />
+            )
+          }}
+        </GlobalContext.Consumer>
       </Switch>
     </BrowserRouter>
   )

@@ -1,6 +1,5 @@
 const express = require('express');
 const SaveQuoteServices = require('./SaveQuoteServices');
-
 const saveQuoteRouter = express.Router();
 const jsonParser = express.json();
 
@@ -40,14 +39,14 @@ saveQuoteRouter.route('/')
       })
   })
 
-saveQuoteRouter.route('/:username')
+saveQuoteRouter.route('/:userId')
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
   })
   .get((req,res) => {
     SaveQuoteServices
-      .getSavedQuotesByUserId(this.db, req.params.username)
+      .getSavedQuotesByUserId(this.db, req.params.userId)
       .then(savedQuotes => {
         res.status(200).json(savedQuotes);
       })
