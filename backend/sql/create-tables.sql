@@ -14,9 +14,6 @@ CREATE TABLE users (
   password TEXT NOT NULL
 )
 
-INSERT INTO users (username, password) VALUES ('ryan', 'pass');
-INSERT INTO users (username, password) VALUES ('brandon', 'otherpass');
-
 
 CREATE TABLE savedQuotes (
   id SERIAL PRIMARY KEY,
