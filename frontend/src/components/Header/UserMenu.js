@@ -10,17 +10,29 @@ export default function UserMenu(props) {
       {({ state, methods }) => {
           return (
             <ul className="user-menu">
-              <NavLink className="user-menu__list-item__link" to={`/user/${state.username}`}>
+              <NavLink 
+                className="user-menu__list-item__link" 
+                to={`/user/${state.username}`} 
+                onClick={() => props.toggleMenuIsOpen()}
+              >
                 <li className="user-menu__list-item">
                   Profile
                 </li>
               </NavLink>
-              <NavLink className="user-menu__list-item__link" to={'/quotes'}>
+              <NavLink 
+                className="user-menu__list-item__link" 
+                to={'/quotes'} 
+                onClick={() => props.toggleMenuIsOpen()}
+              >
                 <li className="user-menu__list-item">
                   Quote Generator
                 </li>
               </NavLink>
-              <NavLink className="user-menu__list-item__link" to={'/'} onClick={() => methods.handleLogout()}>
+              <NavLink 
+                className="user-menu__list-item__link" 
+                to={'/'} 
+                onClick={() => methods.handleLogout()}
+              >
                 <li className="user-menu__list-item">
                   Log Out
                 </li>

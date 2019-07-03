@@ -11,7 +11,6 @@ export default class CreateAccountForm extends Component {
       passwordConfirm: '',
     }
 
-    this.handleTextInput = this.handleTextInput.bind(this);
   }
 
   handleTextInput(e) {
@@ -44,7 +43,12 @@ export default class CreateAccountForm extends Component {
           return (
             <>
               <h3 className="create-account-heading">Create An Account</h3>
-              <form className="create-account-form" onSubmit={(e) => methods.handleCreateAccountSubmit(e, this.state)}>
+              <form 
+                className="create-account-form" 
+                onSubmit={(e) => {
+                  methods.handleCreateAccountSubmit(e, this.state);
+                  this.props.setIsInCreateAccountModeFalse();
+                }}>
 
                 <label className="create-account-form__label" htmlFor="username-input">Username:</label>
                 <input 

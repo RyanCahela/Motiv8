@@ -28,7 +28,6 @@ const SaveQuoteServices = {
             .returning('*');
   },
   deleteSavedQuoteById(dbInstance, savedQuoteId) {
-    console.log(savedQuoteId);
     return dbInstance
             .from('savedquotes')
             .where({'id' : savedQuoteId})

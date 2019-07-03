@@ -45,7 +45,7 @@ class GlobalContextManager extends React.Component {
     this.handleDeleteFavoritesListItem = this.handleDeleteFavoritesListItem.bind(this);
   }
 
-  //QUOTE METHODS
+  //APP METHODS
   componentDidMount() {
     this.initializeApp();
     const isLoggedIn = TokenServices.getTokenByKey('motiv8-jwt');
@@ -76,7 +76,10 @@ class GlobalContextManager extends React.Component {
       })
       .catch(err => console.log(err));
   }
+  //END APP METHODS
+
   
+  //QUOTE METHODS
   handleRandomize() {
     if(!this.state.keepBackground) {
       this.iterateBackgroundUrl(this.backgroundUrlItObj.next());
@@ -244,6 +247,8 @@ class GlobalContextManager extends React.Component {
         userId: decodedToken.userId,
         savedQuotes: res.savedQuotes
       })
+
+      
     })
   }
 
@@ -303,6 +308,7 @@ class GlobalContextManager extends React.Component {
   //END USER METHODS
   
   //HELPER FUNCTIONS
+
   getBackgroundImages(numberOfImages = 30) {
     return fetch(`https://api.unsplash.com/photos/random?count=${numberOfImages}`, {
       headers: {
