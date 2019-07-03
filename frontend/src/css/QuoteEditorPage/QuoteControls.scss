@@ -35,9 +35,20 @@
   background-color: $main-accent-color;
   display: flex;
   font-size: $m-font-size;
+  justify-content: space-around;
   padding: 10px;
   text-align: center;
   outline: 1px solid $menu-bg-color;
   flex-grow: 1;
   transition: background-color .3s ease-in-out;
+}
+
+@media only screen and (min-width: 800px) {
+  .quote-controls__label {
+    justify-content: center;
+  }
+
+  .quote-controls__label__text {
+    margin-left: 5px;
+  }
 }

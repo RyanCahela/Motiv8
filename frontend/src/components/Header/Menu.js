@@ -30,21 +30,21 @@ export default class Menu extends React.Component {
         {({ state }) => {
           if(this.state.menuIsOpen) {
             return (
-              <div>
+              <div className="menu-container">
                 <header className="menu">
                   <button className="menu__button" onClick={this.toggleMenuIsOpen}>X</button>
                   <div>{state.isLoggedIn? `Welcome ${state.username}`: ''}</div>
+                  {state.isLoggedIn? <UserMenu toggleMenuIsOpen={this.toggleMenuIsOpen}/> : <AccountAccessForms />}
                 </header>
-                {state.isLoggedIn? <UserMenu toggleMenuIsOpen={this.toggleMenuIsOpen}/> : <AccountAccessForms />}
               </div>
             )
           }
           else {
             return (
-              <div>
+              <div className="menu-container">
                 <header className="menu">
                   <button className="menu__button" onClick={this.toggleMenuIsOpen}>Menu</button>
-                  <div>{state.isLoggedIn? `Welcome ${state.username}`: ''}</div>
+                  <div className="menu__greeting">{state.isLoggedIn? `Welcome ${state.username}`: ''}</div>
                 </header>
               </div>
             )

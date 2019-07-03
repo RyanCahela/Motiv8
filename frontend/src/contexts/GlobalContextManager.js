@@ -141,6 +141,7 @@ class GlobalContextManager extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TokenServices.getTokenByKey('motiv8-jwt')}`
       },
       body: JSON.stringify(data)
     })

@@ -20,8 +20,12 @@ export default function FavoritesListItem(props) {
             <div>
               <p style={quoteFont}>{props.quote.quote}</p>
               <p style={authorFont}>{props.quote.author}</p>
-              <button onClick={() => methods.handleFavoritesListItemClick(props.quote, props.history)}>Edit</button>
-              <button onClick={() => methods.handleDeleteFavoritesListItem(props.savedQuoteId)}>Delete</button>
+              <button 
+                className="favorites-list-item__button" 
+                onClick={() => methods.handleFavoritesListItemClick(props.quote, props.history)}>Edit</button>
+              <button 
+                className="favorites-list-item__button" 
+                onClick={() => methods.handleDeleteFavoritesListItem(props.savedQuoteId)}>Delete</button>
             </div>
             <img className="favorites-list-item-img" alt='' src={props.quote.backgroundimageurl}></img>
           </li>

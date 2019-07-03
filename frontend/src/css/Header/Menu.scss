@@ -1,20 +1,25 @@
 .menu {
   background: $menu-bg-color;
+  height: 100%;
   color: $menu-text-color;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  z-index: 1000;
 }
 
 .menu__button {
+  background-color: $menu-bg-color;
   color: $menu-text-color;
   font-size: $l-font-size;
   outline: 2px solid $menu-text-color;
+  z-index: 10;
+}
+
+
+
+@media only screen and (min-width: 600px) {
+  .menu {
+    padding: 0;
+  }
 }

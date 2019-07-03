@@ -34,7 +34,7 @@ export default function QuoteControls() {
                       : 
                       <FontAwesomeIcon icon={faSquare} size={iconSize}/>}
                   </div>
-                  <span>Keep Quote</span>
+                  <span className="quote-controls__label__text">Keep Quote</span>
                 </label>
                 <input
                   onChange={(e) => methods.handleCheckboxCheck(e)}
@@ -47,7 +47,7 @@ export default function QuoteControls() {
                       : 
                       <FontAwesomeIcon icon={faSquare} size={iconSize}/>}
                   </div>
-                  <span>Keep Fonts</span>
+                  <span className="quote-controls__label__text">Keep Fonts</span>
                 </label>
                 <input
                   onChange={(e) => methods.handleCheckboxCheck(e)}
@@ -60,7 +60,7 @@ export default function QuoteControls() {
                       : 
                       <FontAwesomeIcon icon={faSquare} size={iconSize}/>}
                   </div>
-                  <span>Keep Background</span>
+                  <span className="quote-controls__label__text">Keep Background</span>
                 </label>
               </div>
             </div>
