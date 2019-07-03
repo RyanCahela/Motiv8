@@ -2,9 +2,11 @@ const express = require('express');
 const SaveQuoteServices = require('./SaveQuoteServices');
 const saveQuoteRouter = express.Router();
 const jsonParser = express.json();
+const requireAuth = require('../middleware/jwt-auth');
 
 
 saveQuoteRouter.route('/')
+  .all(requireAuth)
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
@@ -38,8 +40,21 @@ saveQuoteRouter.route('/')
         res.status(204).send();
       })
   })
+  .delete(jsonParser, (req, res) => {
+    const { quoteId } = req.body;
+    console.log(req.body);
+    SaveQuoteServices
+      .deleteSavedQuoteById(this.db, quoteId)
+      .then(() => {
+        res.status(204).send();
+      })
+      .catch((err) => {
+        res.status(500).send();
+      })
+  })
 
 saveQuoteRouter.route('/:userId')
+  .all(requireAuth)
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
@@ -51,5 +66,4 @@ saveQuoteRouter.route('/:userId')
         res.status(200).json(savedQuotes);
       })
   })
-
 module.exports = saveQuoteRouter;

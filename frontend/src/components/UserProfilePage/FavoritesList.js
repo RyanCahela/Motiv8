@@ -9,7 +9,7 @@ export default function FavoritesList({ history }) {
 
         let favoritesList = state.savedQuotes.map((quote) => {
           return (
-            <FavoritesListItem key={quote.id} quote={quote} history={history}/>
+            <FavoritesListItem key={quote.id} quote={quote} history={history} savedQuoteId={quote.id}/>
           )
         })
         console.log(favoritesList);

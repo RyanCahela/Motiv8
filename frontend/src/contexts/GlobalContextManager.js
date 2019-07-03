@@ -42,6 +42,7 @@ class GlobalContextManager extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.getUpdatedSavedQuotes = this.getUpdatedSavedQuotes.bind(this);
+    this.handleDeleteFavoritesListItem = this.handleDeleteFavoritesListItem.bind(this);
   }
 
   //QUOTE METHODS
@@ -146,6 +147,7 @@ class GlobalContextManager extends React.Component {
     })
   }
 
+
   handleCheckboxCheck(e) {
     switch(e.target.id) {
       case 'keep-quote-checkbox':
@@ -192,10 +194,6 @@ class GlobalContextManager extends React.Component {
 
 
   //USER METHODS
-
-  determineIfUserLoggedIn() {
-
-  }
 
   handleCreateAccountSubmit(e, userInfo) {
     e.preventDefault();
@@ -250,7 +248,7 @@ class GlobalContextManager extends React.Component {
   }
 
   handleLogout() {
-    window.localStorage.removeItem('motiv8-jwt');
+    TokenServices.removeTokenByKey('motiv8-jwt');
     this.setState({
       isLoggedIn: false,
       userId: 0,
@@ -260,7 +258,11 @@ class GlobalContextManager extends React.Component {
   }
 
   getUpdatedSavedQuotes(userId) {
-    fetch(`http://localhost:8000/api/savedQuotes/${userId}`)
+    fetch(`http://localhost:8000/api/savedQuotes/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${TokenServices.getTokenByKey('motiv8-jwt')}`
+      }
+    })
       .then(res => res.json())
       .then(updatedQuotesList => {
         console.log('updated saved quotes', updatedQuotesList)
@@ -268,6 +270,35 @@ class GlobalContextManager extends React.Component {
           savedQuotes: updatedQuotesList
         })
       })
+  }
+
+  handleDeleteFavoritesListItem(quoteId) {
+    const data = { quoteId }
+    fetch(`http://localhost:8000/api/savedQuotes/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TokenServices.getTokenByKey('motiv8-jwt')}`
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if(res.ok) {
+        this.setState((currentState) => {
+          let newSavedQuotes = currentState.savedQuotes.filter((savedQuote) => {
+            if(savedQuote.id === quoteId) {
+              return;
+            }
+            else {
+              return savedQuote
+            }
+          });
+          return {
+            savedQuotes: newSavedQuotes
+          }
+        })
+      }
+    })
   }
   //END USER METHODS
   
@@ -371,7 +402,8 @@ class GlobalContextManager extends React.Component {
         handleCreateAccountSubmit: this.handleCreateAccountSubmit,
         handleLogin: this.handleLogin,
         handleLogout: this.handleLogout,
-        getUpdatedSavedQuotes: this.getUpdatedSavedQuotes
+        getUpdatedSavedQuotes: this.getUpdatedSavedQuotes,
+        handleDeleteFavoritesListItem: this.handleDeleteFavoritesListItem
       }
     }
 

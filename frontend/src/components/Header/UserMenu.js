@@ -11,7 +11,7 @@ export default function UserMenu(props) {
           return (
             <ul className="user-menu">
               <NavLink className="user-menu__list-item__link" to={`/user/${state.username}`}>
-                <li class="user-menu__list-item">
+                <li className="user-menu__list-item">
                   Profile
                 </li>
               </NavLink>

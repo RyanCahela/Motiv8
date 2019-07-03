@@ -1,5 +1,5 @@
 const express = require('express');
-const AuthServices = require('./LoginServices');
+const AuthServices = require('./AuthServices');
 const SavedQuoteServices = require('../save/saveQuoteServices');
 
 const LoginRouter = express.Router();

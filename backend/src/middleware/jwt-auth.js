@@ -1,4 +1,4 @@
-const LoginServices = require('../login/LoginServices');
+const AuthServices = require('../login/AuthServices');
 
 const requireAuth = (req, res, next) => {
   const authToken = req.get('Authorization') || '';
@@ -10,12 +10,10 @@ const requireAuth = (req, res, next) => {
     bearerToken = authToken.slice(7, authToken.length)
   }
 
-  console.log(bearerToken);
   try {
     const payload = AuthServices.verifyJwt(bearerToken);
     console.log('payload', payload);
 
-    
     AuthServices.getUserByUsername(req.app.get('db'), payload.sub)
       .then(user => {
         console.log('user', user);

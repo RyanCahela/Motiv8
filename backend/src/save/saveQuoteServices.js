@@ -4,7 +4,14 @@ const SaveQuoteServices = {
     return dbInstance
             .from('savedquotes')
             .join('quotes', 'savedquotes.quoteid', '=', 'quotes.id')
-            .select('*')
+            .select(
+              'authorfont',
+              'backgroundimageurl',
+              'bodyfont',
+              'quoteid',
+              'savedquotes.id',
+              'quote',
+              'userid')
             .where({'userid': userId });
   },
   saveQuote(dbInstance, quoteToSave) {
@@ -19,6 +26,13 @@ const SaveQuoteServices = {
             .where({'id': savedQuoteId})
             .update(updatedQuote)
             .returning('*');
+  },
+  deleteSavedQuoteById(dbInstance, savedQuoteId) {
+    console.log(savedQuoteId);
+    return dbInstance
+            .from('savedquotes')
+            .where({'id' : savedQuoteId})
+            .del();
   }
 }
 

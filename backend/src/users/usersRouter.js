@@ -44,15 +44,4 @@ userRouter.route('/')
       })
   })
 
-userRouter
-  .route('/:userId')
-  .all(requireAuth)
-  .all((req, res, next) => {
-    this.db = req.app.get('db');
-    next();
-  })
-  .get((req, res) => {
-    savesQuotesServices.getSavedQuotesById(this.db, req.params.userId)
-  })
-
 module.exports = userRouter;

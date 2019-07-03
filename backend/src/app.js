@@ -16,6 +16,8 @@ app.use(helmet());
 app.use('/api/login', loginRouter);
 app.use('/api/quotes', quotesRouter);
 app.use('/api/users', usersRouter);
+
+//protectedRoute
 app.use('/api/savedQuotes', saveQuoteRouter);
 
 module.exports = app;
