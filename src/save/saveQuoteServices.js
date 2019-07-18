@@ -11,6 +11,7 @@ const SaveQuoteServices = {
               'quoteid',
               'savedquotes.id',
               'quote',
+              'author',
               'userid')
             .where({'userid': userId });
   },
