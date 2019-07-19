@@ -14,7 +14,7 @@ userRouter.route('/')
     next();
   })
   .post(jsonParser, (req, res, next) => {
-    //create user
+    //Create User
     const { username, password } = req.body;
     console.log(username);
 
@@ -31,7 +31,7 @@ userRouter.route('/')
               username,
               password : hashedPassword
             }
-    
+            
             UsersServices.insertUser(this.db, validNewUser)
               .then(insertedItemsArray => {
                 [ newUser ] = insertedItemsArray;
