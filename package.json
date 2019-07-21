@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "test": "mocha --require test/setup.js"
+    "test": "mocha --require test/setup.js",
+    "migrate": "postgrator --config postgrator-config.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +29,8 @@
   },
   "engines": {
     "node": "12.2.0"
+  },
+  "devDependencies": {
+    "postgrator-cli": "^3.1.0"
   }
 }
