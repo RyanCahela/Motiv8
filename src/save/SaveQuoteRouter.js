@@ -22,11 +22,11 @@ saveQuoteRouter.route('/')
       userId
     } = req.body;
     const quoteToInsert = {
-      backgroundimageurl: backgroundImageUrl,
-      quoteid: quoteId,
+      background_image_url: backgroundImageUrl,
+      quote_id: quoteId,
       bodyfont: bodyFont,
       authorfont: authorFont,
-      userid: userId
+      user_id: userId
     }
     SaveQuoteServices
       .saveQuote(this.db, quoteToInsert)

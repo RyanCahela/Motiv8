@@ -2,35 +2,35 @@ const SaveQuoteServices = {
   getSavedQuotesByUserId(dbInstance, userId) {
     console.log(userId);
     return dbInstance
-            .from('savedquotes')
-            .join('quotes', 'savedquotes.quoteid', '=', 'quotes.id')
+            .from('saved_quotes')
+            .join('quotes', 'saved_quotes.quote_id', '=', 'quotes.id')
             .select(
               'authorfont',
-              'backgroundimageurl',
+              'background_image_url',
               'bodyfont',
-              'quoteid',
-              'savedquotes.id',
+              'quote_id',
+              'saved_quotes.id',
               'quote',
               'author',
-              'userid')
-            .where({'userid': userId });
+              'user_id')
+            .where({'user_id': userId });
   },
   saveQuote(dbInstance, quoteToSave) {
     return dbInstance
-            .from('savedquotes')
+            .from('saved_quotes')
             .insert(quoteToSave)
             .returning('*');
   },
   updateSavedQuoteById(dbInstance, savedQuoteId, updatedQuote) {
     return dbInstance
-            .from('savedquotes')
+            .from('saved_quotes')
             .where({'id': savedQuoteId})
             .update(updatedQuote)
             .returning('*');
   },
   deleteSavedQuoteById(dbInstance, savedQuoteId) {
     return dbInstance
-            .from('savedquotes')
+            .from('saved_quotes')
             .where({'id' : savedQuoteId})
             .del();
   }

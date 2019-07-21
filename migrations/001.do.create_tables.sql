@@ -19,6 +19,8 @@ CREATE TABLE saved_quotes (
   background_image_url TEXT NOT NULL,
   bodyfont TEXT NOT NULL,
   authorfont TEXT NOT NULL,
-  user_id INTEGER NOT NULL,
-  quote_id INTEGER NOT NULL
+  quote_id INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY(quote_id) REFERENCES quotes(id),
+  FOREIGN KEY(user_id) REFERENCES users(id)
 );
