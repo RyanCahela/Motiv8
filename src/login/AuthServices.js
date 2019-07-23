@@ -22,7 +22,6 @@ const AuthServices = {
             .select('*')
             .where({'username': username})
             .then(queryArray => {
-              console.log(queryArray);
               return queryArray[0];
             });
   },

@@ -1,4 +1,5 @@
 process.env.JWT_SECRET = 'secret-test-password';
+process.env.NODE_ENV = 'test';
 
 
 require('dotenv').config;

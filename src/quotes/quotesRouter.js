@@ -8,16 +8,15 @@ quotesRouter
   .get((req, res, next) => {
 
     const randomNumArray = generateRandomNumArrayWithLength(30);
-
     QuotesServices.getQuotesByIdArray(req.app.get('db'), randomNumArray)
       .then(quotes => {
-        res.status(200).json(quotes)
+        res.status(200).json(quotes);
       })
       .catch(next);
 
     function generateRandomNumArrayWithLength(length) {
-      const ID_RANGE = 11000
-      return Array.from({length: length}, () => Math.floor(Math.random() * ID_RANGE));
+      const ID_RANGE = 5000;
+      return Array.from({length: length}, () => Math.ceil(Math.random() * ID_RANGE));
     }
   })
 

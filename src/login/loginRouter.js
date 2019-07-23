@@ -7,10 +7,8 @@ const jsonParser = express.json();
 
 LoginRouter.route('/')
   .post(jsonParser, (req, res, next) => {
-    console.log('req.body', req.body);
     const { username, password } = req.body;
     const userCredentials = { username, password };
-    console.log(userCredentials);
     
 
     for (const [key, value] of Object.entries(userCredentials)) {
@@ -28,7 +26,6 @@ LoginRouter.route('/')
         //verify req password matches password stored in db.
         return AuthServices.comparePasswords(userCredentials.password, dbUser.password)
                 .then(isMatch => {
-                  console.log('isMatch', isMatch);
                   if(!isMatch) return res.status(400).json({error: 'Incorrect password'});
                   //get saved quotes for user
                   SavedQuoteServices.getSavedQuotesByUserId(req.app.get('db'), dbUser.id)

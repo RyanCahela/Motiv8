@@ -66,24 +66,52 @@ function makeQuotesArray() {
 function makeSavedQuotesArray(quotes) {
   return quotes.map((quote, index) => {
     let saveQuoteId = index + 1;
-    let userId = index < 3 ? 1 : 2; //switches id for testing across multiple accounts
+    let userId = index < 3 ? 1 : 2; //switches user_id to mock multiple accounts saving quotes
     return {
       id: saveQuoteId,
       author: quote.author,
       authorfont: "Playfair Display, serif",
-      backgroundimageurl: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
+      background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
       bodyfont: "PT Sans, sans-serif",
       quote: quote.quote,
-      quoteid: quote.id,
-      userid: userId
+      quote_id: quote.id,
+      user_id: userId
     }
   })
 }
 
+function cleanTables(db) {
+  return db.raw(
+    `TRUNCATE
+      quotes,
+      users,
+      saved_quotes
+      RESTART IDENTITY CASCADE`
+  )
+}
+
+function makeMotiv8Fixtures() {
+  const testUsers = makeUsersArray();
+  const testQuotes = makeQuotesArray();
+  const testSavedQuotes = makeSavedQuotesArray(testQuotes);
+  return { 
+    testUsers, 
+    testQuotes, 
+    testSavedQuotes,
+  }
+}
+
+function seedQuotesTable(db, quotes) {
+  return db.into('quotes').insert(quotes);
+}
+
 module.exports = {
+  cleanTables,
   makeUsersArray,
   makeQuotesArray,
-  makeSavedQuotesArray
+  makeSavedQuotesArray,
+  makeMotiv8Fixtures,
+  seedQuotesTable,
 }
 
 

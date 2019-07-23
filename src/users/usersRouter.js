@@ -16,11 +16,9 @@ userRouter.route('/')
   .post(jsonParser, (req, res, next) => {
     //Create User
     const { username, password } = req.body;
-    console.log(username);
 
     UsersServices.checkIfUserExists(this.db, username)
       .then(userExists => {
-        console.log(userExists);
         if(userExists) {
           return res.status(400).json({error: 'Username already taken'});
         }
@@ -35,7 +33,6 @@ userRouter.route('/')
             UsersServices.insertUser(this.db, validNewUser)
               .then(insertedItemsArray => {
                 [ newUser ] = insertedItemsArray;
-                console.log(newUser);
                 res.status(201)
                   .location(path.posix.join(req.originalUrl, `/${newUser.id}`))
                   .json(UsersServices.serializeUser(newUser));

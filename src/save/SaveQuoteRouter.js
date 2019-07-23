@@ -8,12 +8,10 @@ const requireAuth = require('../middleware/jwt-auth');
 saveQuoteRouter.route('/')
   .all(requireAuth)
   .all((req, res, next) => {
-    console.log('inside db get');
     this.db = req.app.get('db');
     next();
   })
   .post(jsonParser, (req, res) => {
-    console.log('inside post');
     const {
       backgroundImageUrl,
       quoteId,
@@ -44,7 +42,6 @@ saveQuoteRouter.route('/')
   })
   .delete(jsonParser, (req, res) => {
     const { quoteId } = req.body;
-    console.log(req.body);
     SaveQuoteServices
       .deleteSavedQuoteById(this.db, quoteId)
       .then(() => {

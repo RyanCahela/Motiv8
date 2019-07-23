@@ -1,6 +1,5 @@
 const SaveQuoteServices = {
   getSavedQuotesByUserId(dbInstance, userId) {
-    console.log(userId);
     return dbInstance
             .from('saved_quotes')
             .join('quotes', 'saved_quotes.quote_id', '=', 'quotes.id')
