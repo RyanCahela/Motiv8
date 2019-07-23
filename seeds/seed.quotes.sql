@@ -1,1 +1,1 @@
-\COPY quotes (category, subcategory, quote, author, authorfacts, keywords) FROM 'collection-of-inspirational-quotes-utf8.csv' DELIMITERS ',' CSV;
+\COPY quotes (category, subcategory, quote, author, authorfacts, keywords) FROM 'collection-of-inspirational-quotes-utf8-small.csv' DELIMITERS ',' CSV;
