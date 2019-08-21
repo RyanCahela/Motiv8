@@ -1,16 +1,13 @@
-const helpers = require('./test-helpers');
+const helpers = require('../test-helpers');
 const knex = require('knex');
-const app = require('../src/app');
+const app = require('../../src/app');
 
 
 describe('Quotes Endpoints', function() {
-
   function printResponse(res) {
-    console.log('response raw',res.text);
+    console.log('response raw',res);
   }
-
   let db;
-
   const {
     testUsers,
     testQuotes,
@@ -36,19 +33,17 @@ describe('Quotes Endpoints', function() {
   });
 
   context('Given quotes in db', () => {
-    beforeEach('insert quotes', () => helpers.seedQuotesTable(db, testQuotes))
+    beforeEach('insert quotes', () => helpers.seedQuotesTable(db, testQuotes));
 
     afterEach('remove quotes', () => helpers.cleanTables(db));
 
-    
-    it('responds with 200 and 30 random quotes in correct format', () => {
+    it('responds with 200', () => {
       return supertest(app)
       .get('/api/quotes')
-      .expect('print response', printResponse);
-    })
-
-
-
-    
-  })
+      .expect(200)
+      .then(response => {
+        console.log('json', response.body);
+      })
+    });
+  });
 });

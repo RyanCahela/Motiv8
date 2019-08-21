@@ -68,12 +68,10 @@ function makeSavedQuotesArray(quotes) {
     let saveQuoteId = index + 1;
     let userId = index < 3 ? 1 : 2; //switches user_id to mock multiple accounts saving quotes
     return {
-      id: saveQuoteId,
-      author: quote.author,
+      saveQuoteId: saveQuoteId,
       authorfont: "Playfair Display, serif",
       background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
       bodyfont: "PT Sans, sans-serif",
-      quote: quote.quote,
       quote_id: quote.id,
       user_id: userId
     }
@@ -102,7 +100,16 @@ function makeMotiv8Fixtures() {
 }
 
 function seedQuotesTable(db, quotes) {
+  console.log('Seed - Quotes', quotes);
   return db.into('quotes').insert(quotes);
+}
+
+function seedSaveQuotesTable(db, saveQuotes) {
+  return db.into('saved_quotes').insert(saveQuotes);
+}
+
+function seedUsersTable(db, users) {
+  return db.into('users').insert(users);
 }
 
 module.exports = {
@@ -112,6 +119,8 @@ module.exports = {
   makeSavedQuotesArray,
   makeMotiv8Fixtures,
   seedQuotesTable,
+  seedSaveQuotesTable,
+  seedUsersTable,
 }
 
 

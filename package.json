@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "test": "mocha --require test/setup.js",
+    "test": "mocha -c --reporter=spec --require test/setup.js --recursive 'test/**/*.spec.js'",
     "migrate": "postgrator --config postgrator-config.js",
     "migrate-production": "postgrator --config postgrator-production-config.js",
     "predeploy": "npm audit && npm run migrate-production",
