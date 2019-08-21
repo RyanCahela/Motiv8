@@ -5,7 +5,7 @@ const app = require('../../src/app');
 
 describe('Quotes Endpoints', function() {
   function printResponse(res) {
-    console.log('response raw',res);
+    
   }
   let db;
   const {
@@ -28,7 +28,7 @@ describe('Quotes Endpoints', function() {
     it('responds with 200 and an empty list', () => {
       return supertest(app)
         .get('/api/quotes')
-        .expect(printResponse);
+        .expect(200);
     });
   });
 

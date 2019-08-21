@@ -1,14 +1,14 @@
+const bcrypt = require('bcryptjs');
+
 function makeUsersArray() {
   return [
     {
-      id: 1,
       username: 'test',
-      password: 'password',
+      password: bcrypt.hashSync('password', 12),
     },
     {
-      id: 2,
       username: 'coolguy90',
-      password: 'password',
+      password: bcrypt.hashSync('password', 12),
     }
   ]
 }
@@ -65,20 +65,20 @@ function makeQuotesArray() {
 
 function makeSavedQuotesArray(quotes) {
   return quotes.map((quote, index) => {
-    let saveQuoteId = index + 1;
+    let savedQuoteId = index + 1;
     let userId = index < 3 ? 1 : 2; //switches user_id to mock multiple accounts saving quotes
     return {
-      saveQuoteId: saveQuoteId,
       authorfont: "Playfair Display, serif",
       background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
       bodyfont: "PT Sans, sans-serif",
-      quote_id: quote.id,
+      quote_id: 1,
       user_id: userId
     }
   })
 }
 
 function cleanTables(db) {
+  console.log('clean tables ran');
   return db.raw(
     `TRUNCATE
       quotes,
@@ -100,16 +100,21 @@ function makeMotiv8Fixtures() {
 }
 
 function seedQuotesTable(db, quotes) {
-  console.log('Seed - Quotes', quotes);
-  return db.into('quotes').insert(quotes);
+  return db.into('quotes')
+          .insert(quotes)
+          .returning('*');
 }
 
 function seedSaveQuotesTable(db, saveQuotes) {
-  return db.into('saved_quotes').insert(saveQuotes);
+  return db.into('saved_quotes')
+          .insert(saveQuotes)
+          .returning('*');
 }
 
 function seedUsersTable(db, users) {
-  return db.into('users').insert(users);
+  return db.into('users')
+    .insert(users)
+    .returning('*');
 }
 
 module.exports = {

@@ -7,10 +7,8 @@ quotesRouter
   .get((req, res, next) => {
 
     const randomNumArray = generateRandomNumArrayWithLength(30);
-    console.log('randomNUmArray', randomNumArray);
     QuotesServices.getQuotesByIdArray(req.app.get('db'), randomNumArray)
       .then(quotes => {
-        console.log('quotes', quotes);
         res.status(200).json(quotes);
       })
       .catch(next);

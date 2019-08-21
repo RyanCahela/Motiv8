@@ -33,7 +33,7 @@ LoginRouter.route('/')
                     //create jwt
                     const subject = dbUser.username;
                     const payload = { userId: dbUser.id };
-                    res.send({
+                    res.status(200).send({
                       authToken: AuthServices.createJwt(subject, payload),
                       savedQuotes: savedQuotes
                     })

@@ -23,7 +23,7 @@ const SaveQuoteServices = {
   updateSavedQuoteById(dbInstance, savedQuoteId, updatedQuote) {
     return dbInstance
             .from('saved_quotes')
-            .where({'id': savedQuoteId})
+            .where('id', savedQuoteId)
             .update(updatedQuote)
             .returning('*');
   },
