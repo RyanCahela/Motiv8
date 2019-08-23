@@ -20,6 +20,7 @@ quotesRouter
     }
   })
   .post(jsonbodyparser, (req, res, next) => {
+    console.log('POST req body', req.body)
     const {
       //must have values
       category,

@@ -4,9 +4,6 @@ const app = require('../../src/app');
 
 
 describe('Quotes Endpoints', function() {
-  function printResponse(res) {
-    
-  }
   let db;
   const {
     testUsers,
@@ -25,7 +22,7 @@ describe('Quotes Endpoints', function() {
   after('disconnect from db', () => db.destroy());
 
   context('Given no quotes in db', () => {
-    it('responds with 200 and an empty list', () => {
+    it('GET responds with 200 and an empty list', () => {
       return supertest(app)
         .get('/api/quotes')
         .expect(200);
@@ -37,13 +34,27 @@ describe('Quotes Endpoints', function() {
 
     afterEach('remove quotes', () => helpers.cleanTables(db));
 
-    it('responds with 200', () => {
+    it('GET responds with 200', () => {
       return supertest(app)
       .get('/api/quotes')
-      .expect(200)
-      .then(response => {
-        console.log('json', response.body);
-      })
+      .expect(200);
     });
+
+    it('POST responds with 201 and created quote', () => {
+      let newQuote = {
+        "category": "inspirational",
+        "quote": "test quote",
+        "author": "test author"
+      };
+      return supertest(app)
+        .post('/api/quotes')
+        .set('Content-Type', 'application/json')
+        //I just hardcoded the json thinking it might be the cause of the bug
+        .send('{"category": "inspirational", "quote": "test quote","author": "test author"}')
+        .expect(201)
+        .then(res => {
+          console.log('post res', res.status);
+        })
+    })
   });
 });

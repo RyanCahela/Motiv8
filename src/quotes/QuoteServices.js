@@ -7,11 +7,11 @@ const QuotesServices = {
   },
 
   insertQuote(dbInstance, quoteData) {
-    return dbInstance
+    return dbInstance('quotes')
             .insert(quoteData)
-            .into('quotes')
             .returning('*')
             .then(res => {
+              console.log('res', res)
               return res[0];
             });
   },

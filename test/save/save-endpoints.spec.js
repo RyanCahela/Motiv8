@@ -20,8 +20,7 @@ describe('Save Endpoints', () => {
     });
     app.set('db', db);
 
-    return helpers.seedUsersTable(db, testUsers)
-            .then(res => console.log('seed users table' ,res));
+    return helpers.seedUsersTable(db, testUsers);
   })
 
   before('get auth token', () => {
@@ -41,18 +40,15 @@ describe('Save Endpoints', () => {
 
   context('given there are quotes in db', () => {
     beforeEach('seed users table', () => {
-      return helpers.seedUsersTable(db, testUsers)
-              .then(res => console.log('seed users table' ,res));
+      return helpers.seedUsersTable(db, testUsers);
     });
 
     beforeEach('seed quotes', () => {
-      return helpers.seedQuotesTable(db, testQuotes)
-              .then(res => console.log('seed quotes table', res));
+      return helpers.seedQuotesTable(db, testQuotes);
     });
 
     beforeEach('seed saveQuotes into table', () => {
-      return helpers.seedSaveQuotesTable(db, testSavedQuotes)
-              .then(res => console.log('seed saveQuotes table', res));
+      return helpers.seedSaveQuotesTable(db, testSavedQuotes);
     });
 
 
