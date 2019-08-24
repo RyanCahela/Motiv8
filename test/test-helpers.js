@@ -82,6 +82,20 @@ function cleanTables(db) {
   )
 }
 
+function loginAsTestUser(app) {
+  return supertest(app)
+          //login to get auth token
+          .post('/api/login')
+          .set('Content-Type', 'application/json')
+          .send({
+            username: 'test',
+            password: 'password'
+          })
+          .then(response => {
+            return response.body.authToken;
+          });
+}
+
 function makeMotiv8Fixtures() {
   const testUsers = makeUsersArray();
   const testQuotes = makeQuotesArray();
@@ -113,6 +127,7 @@ function seedUsersTable(db, users) {
 
 module.exports = {
   cleanTables,
+  loginAsTestUser,
   makeUsersArray,
   makeQuotesArray,
   makeSavedQuotesArray,

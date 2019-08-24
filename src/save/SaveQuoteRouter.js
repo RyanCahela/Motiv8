@@ -2,7 +2,7 @@ const express = require('express');
 const SaveQuoteServices = require('./saveQuoteServices');
 const saveQuoteRouter = express.Router();
 const jsonParser = express.json();
-const requireAuth = require('../middleware/jwt-auth');
+const requireAuth = require('../middleware/requireAuth');
 
 
 saveQuoteRouter.route('/')

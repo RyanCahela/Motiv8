@@ -20,19 +20,78 @@ describe('users endpoints', () => {
 
   after('clean tables', () => helpers.cleanTables(db));
 
+  beforeEach('seed users table', () => helpers.seedUsersTable(db, testUsers));
 
-  it('responds with the posted user to create', ()=> {
+  afterEach('clean tables', () => helpers.cleanTables(db));
+
+  it('POST responds with 201 and the new created user', ()=> {
     let newUser = {
       "username": "new",
       "password": "1234"
     }
 
+    let expectedResponse = {
+      id: 3,
+      username: "new",
+    }
+
     return supertest(app)
             .post('/api/users')
             .send(newUser)
-            .expect(201, {
-              "id": 1,
-              "username": "new"
+            .expect((res) => {
+              return expect(res.body).to.deep.equal(expectedResponse);
+            })
+            .expect(201)
+            .catch(err => {throw new Error(err)})
+  });
+
+  it('AUTH GET responds with 200 and the found user', () => {
+    const expectedResponse = {
+      id: 1,
+      username: 'test'
+    }
+
+    return helpers.loginAsTestUser(app)
+            //actual test
+            .then(authToken => {
+              return supertest(app)
+                    .get('/api/users/test')
+                    .set('Authorization', `bearer ${authToken}`)
+                    .expect(res=> {
+                      return expect(res.body).to.deep.equal(expectedResponse)
+                    })
+                    .catch(err => {throw new Error(err)});
+            });
+  });
+
+  it('AUTH PATCH responds with 200 and updated username', () => {
+    const expectedResponse = {
+      username: 'newUsername'
+    }
+
+    return helpers.loginAsTestUser(app)
+            .then(authToken => {
+              return supertest(app)
+                      .patch('/api/users/test')
+                      .set('Authorization', `bearer ${authToken}`)
+                      .send({
+                        username: 'newUsername',
+                        password: 'password'
+                      })
+                      .expect(res => {
+                        return expect(res.body).to.deep.equal(expectedResponse);
+                      })
+                      .expect(200)
+                      .catch(err => {throw new Error(err)});
+            });
+  });
+  it('AUTH DELETE responds with 204', () => {
+    return helpers.loginAsTestUser(app)
+            .then(authToken => {
+              return supertest(app)
+                      .delete('/api/users/test')
+                      .set('Authorization', `bearer ${authToken}`)
+                      .expect(204)
             });
   });
 });

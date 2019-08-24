@@ -25,6 +25,9 @@ const AuthServices = {
               return queryArray[0];
             });
   },
+  hashPassword(password) {
+    return bcrypt.hash(password, 12);
+  },
   comparePasswords(string, hash) {
     return bcrypt.compare(string, hash)
   }
