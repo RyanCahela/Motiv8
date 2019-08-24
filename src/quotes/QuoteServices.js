@@ -11,7 +11,6 @@ const QuotesServices = {
             .insert(quoteData)
             .returning('*')
             .then(res => {
-              console.log('res', res)
               return res[0];
             });
   },

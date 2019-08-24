@@ -67,6 +67,24 @@ describe('Quotes Endpoints', function() {
         })
         .expect(201)
         .catch(err => {throw new Error(err)})
-    })
+    });
+
+    it('PATCH responds with 204 on successful patch', () => {
+      const updatedQuote = {
+        id: 1,
+        author: 'test update'
+      }
+      return supertest(app)
+              .patch('/api/quotes')
+              .set('Content-Type', 'application/json')
+              .send(updatedQuote)
+              .expect(204);
+    });
+
+    it('DELETE responds with 204 on successful delete', () => {
+      return supertest(app)
+              .delete('/api/quotes/1')
+              .expect(204)
+    });
   });
 });

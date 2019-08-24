@@ -19,7 +19,6 @@ describe('login endpoints', () => {
     app.set('db', db);
 
     return helpers.seedUsersTable(db, testUsers)
-            .then(res => console.log('seed users table' ,res));
   });
 
   it('POST responds 200', () => {

@@ -73,7 +73,6 @@ function makeSavedQuotesArray(quotes) {
 }
 
 function cleanTables(db) {
-  console.log('clean tables ran');
   return db.raw(
     `TRUNCATE
       quotes,
