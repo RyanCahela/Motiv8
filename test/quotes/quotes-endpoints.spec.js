@@ -46,15 +46,27 @@ describe('Quotes Endpoints', function() {
         "quote": "test quote",
         "author": "test author"
       };
+
+      expectedResponse = {
+        id: 6,
+        caegory: 'inspirational',
+        subcategory: null,
+        quote: 'test quote',
+        author: 'test author',
+        authorfacts: null,
+        keywords: null
+      }
+
       return supertest(app)
         .post('/api/quotes')
         .set('Content-Type', 'application/json')
         //I just hardcoded the json thinking it might be the cause of the bug
-        .send('{"category": "inspirational", "quote": "test quote","author": "test author"}')
+        .send(newQuote)
         .expect(201)
-        .then(res => {
-          console.log('post res', res.status);
+        .expect((res) => {
+          return expect(res.body).to.deep.equal(expectedResponse);
         })
+        .catch(err => console.log('error', err))
     })
   });
 });
