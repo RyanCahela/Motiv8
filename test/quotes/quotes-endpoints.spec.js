@@ -49,7 +49,7 @@ describe('Quotes Endpoints', function() {
 
       expectedResponse = {
         id: 6,
-        caegory: 'inspirational',
+        category: 'inspirational',
         subcategory: null,
         quote: 'test quote',
         author: 'test author',
@@ -62,11 +62,11 @@ describe('Quotes Endpoints', function() {
         .set('Content-Type', 'application/json')
         //I just hardcoded the json thinking it might be the cause of the bug
         .send(newQuote)
-        .expect(201)
         .expect((res) => {
           return expect(res.body).to.deep.equal(expectedResponse);
         })
-        .catch(err => console.log('error', err))
+        .expect(201)
+        .catch(err => {throw new Error(err)})
     })
   });
 });
