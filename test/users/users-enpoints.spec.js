@@ -68,7 +68,8 @@ describe('users endpoints', () => {
               return supertest(app)
                     .get('/api/users/test')
                     .set('Authorization', `bearer ${authToken}`)
-                    .expect(res=> {
+                    .expect(res => {
+                      console.log('RES BODY', res.body);
                       return expect(res.body).to.deep.equal(expectedResponse)
                     })
                     .catch(err => {throw new Error(err)});
@@ -77,6 +78,7 @@ describe('users endpoints', () => {
 
   it('AUTH PATCH responds with 200 and updated username', () => {
     const expectedResponse = {
+      id: 1,
       username: 'newUsername'
     }
 

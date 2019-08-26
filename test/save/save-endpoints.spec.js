@@ -25,7 +25,7 @@ describe('Save Endpoints', () => {
       return helpers.seedUsersTable(db, testUsers);
     });
 
-    beforeEach('seed quotes', () => {
+    beforeEach('seed quotes table', () => {
       return helpers.seedQuotesTable(db, testQuotes);
     });
 
@@ -146,7 +146,7 @@ describe('Save Endpoints', () => {
       return helpers.loginAsTestUser(app)
               .then(authToken => {
                 return supertest(app)
-                        .get('/api/savedQuotes/1')
+                        .get('/api/savedQuotes/test')
                         .set('Authorization', `bearer ${authToken}`)
                         .expect(200)
                         .then(response => {

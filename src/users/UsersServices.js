@@ -24,6 +24,8 @@ const UsersServices = {
             .from('users')
             .select('*')
             .where({'username': username})
+            .returning('*')
+            .then(arr => arr[0]);
   },
   hashPassword(password) {
     return bcrypt.hash(password, 12);
@@ -51,7 +53,8 @@ const UsersServices = {
                         username: dataToUpdate.username,
                         password: hashedPassword
                       })
-                      .returning('*');
+                      .returning('*')
+                      .then(arr => arr[0]);
             });
   }
 }

@@ -1,5 +1,6 @@
 const express = require('express');
 const SaveQuoteServices = require('./saveQuoteServices');
+const UserServices = require('../users/UsersServices');
 const saveQuoteRouter = express.Router();
 const jsonParser = express.json();
 const requireAuth = require('../middleware/requireAuth');
@@ -57,17 +58,20 @@ saveQuoteRouter.route('/')
       })
   })
 
-saveQuoteRouter.route('/:userId')
+saveQuoteRouter.route('/:username')
   .all(requireAuth)
   .all((req, res, next) => {
     this.db = req.app.get('db');
     next();
   })
   .get((req,res) => {
-    SaveQuoteServices
-      .getSavedQuotesByUserId(req.app.get('db'), req.params.userId)
-      .then(savedQuotes => {
-        res.status(200).json(savedQuotes);
-      })
-  })
+    UserServices.getUserByUsername(req.app.get('db'), req.user.username)
+      .then(foundUser => {
+        return SaveQuoteServices
+                .getSavedQuotesByUserId(req.app.get('db'), foundUser.id)
+                .then(savedQuotes => {
+                  res.status(200).json(savedQuotes);
+                });
+      });
+  });
 module.exports = saveQuoteRouter;
