@@ -51,21 +51,13 @@ describe('Save Endpoints', () => {
       return helpers.seedSaveQuotesTable(db, testSavedQuotes);
     });
 
-
-
     afterEach('clean tables', () => {
       return helpers.cleanTables(db);
     });
 
     it('PATCH responds with 204', ()=> {
-      let auth = {
-
-      }
       let data = {
         "id": 1,
-        // "authorfont": "Playfair Display, serif",
-        // "background_image_url": "https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ",
-        // "bodyfont": "PT Sans",
         "quote_id": "2",
         "user_id": "1"
       }

@@ -1,5 +1,6 @@
 const express = require('express');
 const AuthServices = require('./AuthServices');
+const UsersServices = require('../users/UsersServices');
 const SavedQuoteServices = require('../save/saveQuoteServices');
 
 const LoginRouter = express.Router();
@@ -19,10 +20,10 @@ LoginRouter.route('/')
       }
     }
     //grab user obj from db
-    AuthServices.getUserByUsername(req.app.get('db'), username)
-      .then(dbUser => {
-        if(!dbUser) return res.status(400).json({error: 'Incorrect username'});
-        
+    UsersServices.getUserByUsername(req.app.get('db'), username)
+      .then(dbUserArray => {
+        if(dbUserArray.length == 0) return res.status(400).json({error: 'Incorrect username'});
+        let dbUser = dbUserArray[0];
         //verify req password matches password stored in db.
         return AuthServices.comparePasswords(userCredentials.password, dbUser.password)
                 .then(isMatch => {

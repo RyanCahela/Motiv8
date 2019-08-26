@@ -23,7 +23,7 @@ const UsersServices = {
     return dbInstance
             .from('users')
             .select('*')
-            .where({'username': username});
+            .where({'username': username})
   },
   hashPassword(password) {
     return bcrypt.hash(password, 12);

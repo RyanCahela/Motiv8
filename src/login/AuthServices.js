@@ -16,15 +16,6 @@ const AuthServices = {
         algorithm: 'HS256'
       });
   },
-  getUserByUsername(dbInstance, username) {
-    return dbInstance
-            .from('users')
-            .select('*')
-            .where({'username': username})
-            .then(queryArray => {
-              return queryArray[0];
-            });
-  },
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
