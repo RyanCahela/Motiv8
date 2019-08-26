@@ -85,7 +85,7 @@ function cleanTables(db) {
 function loginAsTestUser(app) {
   return supertest(app)
           //login to get auth token
-          .post('/api/login')
+          .post('/api/users/login')
           .set('Content-Type', 'application/json')
           .send({
             username: 'test',

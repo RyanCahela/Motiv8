@@ -1,9 +1,9 @@
 const express = require('express');
 const UsersServices = require('./UsersServices');
-const AuthServices = require('../login/AuthServices');
+const AuthServices = require('../services/AuthServices');
 const path = require('path');
 const requireAuth = require('../middleware/requireAuth');
-const savesQuotesServices = require('../save/saveQuoteServices');
+const SaveQuoteServices = require('../save/saveQuoteServices');
 const userRouter = express.Router();
 const jsonParser = express.json();
 
@@ -40,6 +40,42 @@ userRouter.route('/')
           })
       })
   })
+
+userRouter.route('/login')
+  .post(jsonParser, (req, res, next) => {
+    const { username, password } = req.body;
+    const userCredentials = { username, password };
+    for (const [key, value] of Object.entries(userCredentials)) {
+      if(!value) {
+        return res.status(400).json({
+          error: `missing ${key} in request body`
+        });
+      }
+    }
+    //grab user obj from db
+    UsersServices.getUserByUsername(req.app.get('db'), username)
+      .then(dbUserArray => {
+        if(dbUserArray.length == 0) return res.status(400).json({error: 'Incorrect username'});
+        let dbUser = dbUserArray[0];
+        //verify req password matches password stored in db.
+        return AuthServices.comparePasswords(userCredentials.password, dbUser.password)
+                .then(isMatch => {
+                  if(!isMatch) return res.status(400).json({error: 'Incorrect password'});
+                  //get saved quotes for user
+                  SaveQuoteServices.getSavedQuotesByUserId(req.app.get('db'), dbUser.id)
+                  .then(savedQuotes => {
+                    //create jwt
+                    const subject = dbUser.username;
+                    const payload = { userId: dbUser.id };
+                    res.status(200).send({
+                      authToken: AuthServices.createJwt(subject, payload),
+                      savedQuotes: savedQuotes
+                    });
+                  });
+                });
+      });
+    //send jwt back to client
+  });
 
 //Protected Routes
 userRouter.route('/:username')
@@ -83,6 +119,6 @@ userRouter.route('/:username')
           res.status(204).send();
         }
       });
-  })
+  });
 
 module.exports = userRouter;

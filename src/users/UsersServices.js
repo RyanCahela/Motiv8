@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const xss = require('xss');
-const AuthServices = require('../login/AuthServices');
+const AuthServices = require('../services/AuthServices');
 
 const UsersServices = {
   checkIfUserExists(dbInstance, username) {

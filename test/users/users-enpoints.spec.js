@@ -45,6 +45,17 @@ describe('users endpoints', () => {
             .catch(err => {throw new Error(err)})
   });
 
+  it('POST /login responds 200', () => {
+    let data = {
+      username: 'test',
+      password: 'password'
+    }
+    return supertest(app)
+            .post('/api/users/login')
+            .send(data)
+            .expect(200);
+  })
+
   it('AUTH GET responds with 200 and the found user', () => {
     const expectedResponse = {
       id: 1,

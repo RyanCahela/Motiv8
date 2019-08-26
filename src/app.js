@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const quotesRouter = require('./quotes/quotesRouter');
 const usersRouter = require('./users/usersRouter');
 const saveQuoteRouter = require('./save/SaveQuoteRouter.js');
-const loginRouter = require('./login/loginRouter')
 
 const app = express();
 
@@ -15,7 +14,6 @@ const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
 app.use(cors());
 app.use(morgan(morganSetting))
 app.use(helmet());
-app.use('/api/login', loginRouter);
 app.use('/api/quotes', quotesRouter);
 app.use('/api/users', usersRouter);
 
