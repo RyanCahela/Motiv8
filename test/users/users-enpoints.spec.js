@@ -69,7 +69,6 @@ describe('users endpoints', () => {
                     .get('/api/users/test')
                     .set('Authorization', `bearer ${authToken}`)
                     .expect(res => {
-                      console.log('RES BODY', res.body);
                       return expect(res.body).to.deep.equal(expectedResponse)
                     })
                     .catch(err => {throw new Error(err)});
