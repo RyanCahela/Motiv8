@@ -53,7 +53,7 @@ describe('Save Endpoints', () => {
               });
     });
 
-    it('POST responds with 201', () => {
+    it('POST responds with 201 and created saveQuote', () => {
       let data = {
         authorFont: "Playfair Display, serif",
         backgroundImageUrl: "https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ",
@@ -61,15 +61,27 @@ describe('Save Endpoints', () => {
         quoteId: 3,
         userId: 1
       };
+      const expectedData = {
+          id: 6,
+          authorFont: "Playfair Display, serif",
+          backgroundImageUrl: "https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ",
+          bodyFont: "PT Sans",
+          quoteId: 3,
+          userId: 1
+      };
       return helpers.loginAsTestUser(app)
               .then(authToken => {
                 return supertest(app)
                         .post('/api/savedQuotes')
                         .set('Authorization', `bearer ${authToken}`)
                         .send(data)
-                        .expect(201);
+                        .expect(201)
+                        .then(response => {
+                          expect(response.body).to.deep.equal(expectedData);
+                        })
+                        .catch(err => {throw new Error(err)});
               });
-    });;
+    });
 
     it('DELETE responds with 204', () => {
       let data = {savedQuoteId: 2};
@@ -83,13 +95,64 @@ describe('Save Endpoints', () => {
               });
     });
 
-    it('GET :userId responds 200', () => {
+    it('GET :userId responds 200 and array of savedQuotes for user', () => {
+      const expectedData = [
+        {
+          authorfont: 'Playfair Display, serif',
+          background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
+          bodyfont: 'PT Sans, sans-serif',
+          quote_id: 1,
+          id: 3,
+          quote: 'Far better to think historically, to remember the lessons of the ' +
+            'past. Thus, far better to conceive of power as consisting in part ' +
+            'of the knowledge of when not to use all the power you have. Far ' +
+            'better to be one who knows that if you reserve the power not to use ' +
+            'all your power, you will lead others far more successfully and ' +
+            'well.',
+          author: 'A Bartlett Giamatti',
+          user_id: 1
+        },
+        {
+          authorfont: 'Playfair Display, serif',
+          background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
+          bodyfont: 'PT Sans, sans-serif',
+          quote_id: 1,
+          id: 2,
+          quote: 'Far better to think historically, to remember the lessons of the ' +
+            'past. Thus, far better to conceive of power as consisting in part ' +
+            'of the knowledge of when not to use all the power you have. Far ' +
+            'better to be one who knows that if you reserve the power not to use ' +
+            'all your power, you will lead others far more successfully and ' +
+            'well.',
+          author: 'A Bartlett Giamatti',
+          user_id: 1
+        },
+        {
+          authorfont: 'Playfair Display, serif',
+          background_image_url: 'https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ"',
+          bodyfont: 'PT Sans, sans-serif',
+          quote_id: 1,
+          id: 1,
+          quote: 'Far better to think historically, to remember the lessons of the ' +
+            'past. Thus, far better to conceive of power as consisting in part ' +
+            'of the knowledge of when not to use all the power you have. Far ' +
+            'better to be one who knows that if you reserve the power not to use ' +
+            'all your power, you will lead others far more successfully and ' +
+            'well.',
+          author: 'A Bartlett Giamatti',
+          user_id: 1
+        }
+      ];
       return helpers.loginAsTestUser(app)
               .then(authToken => {
                 return supertest(app)
                         .get('/api/savedQuotes/1')
                         .set('Authorization', `bearer ${authToken}`)
-                        .expect(200);
+                        .expect(200)
+                        .then(response => {
+                          expect(response.body).to.deep.equal(expectedData);
+                        })
+                        .catch(err => {throw new Error(err)});
               });
     });
   });

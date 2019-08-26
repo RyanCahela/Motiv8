@@ -25,7 +25,15 @@ saveQuoteRouter.route('/')
     SaveQuoteServices
       .saveQuote(req.app.get('db'), quoteToInsert)
       .then(quoteThatWasSaved => {
-        res.status(201).send();
+        const dataToSendBack = {
+          id: quoteThatWasSaved.id,
+          backgroundImageUrl: quoteThatWasSaved.background_image_url,
+          quoteId: quoteThatWasSaved.quote_id,
+          bodyFont: quoteThatWasSaved.bodyfont,
+          authorFont: quoteThatWasSaved.authorfont,
+          userId: quoteThatWasSaved.user_id
+        }
+        res.status(201).json(dataToSendBack);
       })
   })
   .patch(jsonParser, (req, res) => {

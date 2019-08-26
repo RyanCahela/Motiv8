@@ -18,7 +18,9 @@ const SaveQuoteServices = {
     return dbInstance
             .from('saved_quotes')
             .insert(quoteToSave)
-            .returning('*');
+            .returning('*')
+            .then(returningArr => returningArr[0])
+            .catch(err => {throw new Error(err)});
   },
   updateSavedQuoteById(dbInstance, savedQuoteId, updatedQuote) {
     return dbInstance
