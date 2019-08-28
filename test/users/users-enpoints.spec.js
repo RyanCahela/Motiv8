@@ -25,12 +25,12 @@ describe('users endpoints', () => {
   afterEach('clean tables', () => helpers.cleanTables(db));
 
   it('POST responds with 201 and the new created user', ()=> {
-    let newUser = {
+    const newUser = {
       "username": "new",
       "password": "1234"
     }
 
-    let expectedResponse = {
+    const expectedResponse = {
       id: 3,
       username: "new",
     }
@@ -46,7 +46,7 @@ describe('users endpoints', () => {
   });
 
   it('POST /login responds 200', () => {
-    let data = {
+    const data = {
       username: 'test',
       password: 'password'
     }
@@ -80,7 +80,6 @@ describe('users endpoints', () => {
       id: 1,
       username: 'newUsername'
     }
-
     return helpers.loginAsTestUser(app)
             .then(authToken => {
               return supertest(app)

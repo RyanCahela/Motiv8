@@ -38,7 +38,7 @@ describe('Save Endpoints', () => {
     });
 
     it('PATCH responds with 204', ()=> {
-      let data = {
+      const data = {
         "id": 1,
         "quote_id": "2",
         "user_id": "1"
@@ -54,7 +54,7 @@ describe('Save Endpoints', () => {
     });
 
     it('POST responds with 201 and created saveQuote', () => {
-      let data = {
+      const data = {
         authorFont: "Playfair Display, serif",
         backgroundImageUrl: "https://images.unsplash.com/photo-1559439226-08cc38293b8b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc2Mjg1fQ",
         bodyFont: "PT Sans",
@@ -84,7 +84,7 @@ describe('Save Endpoints', () => {
     });
 
     it('DELETE responds with 204', () => {
-      let data = {savedQuoteId: 2};
+      const data = {savedQuoteId: 2};
       return helpers.loginAsTestUser(app)
               .then(authToken => {
                 return supertest(app)
