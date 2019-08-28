@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const backgroundImagesRouter = require('./backgroundImages/backgroundImagesRouter');
 const quotesRouter = require('./quotes/quotesRouter');
 const usersRouter = require('./users/usersRouter');
 const saveQuoteRouter = require('./save/SaveQuoteRouter.js');
@@ -13,6 +14,7 @@ const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
 app.use(cors());
 app.use(morgan(morganSetting))
 app.use(helmet());
+app.use('/api/backgroundImages', backgroundImagesRouter);
 app.use('/api/quotes', quotesRouter);
 app.use('/api/users', usersRouter);
 
