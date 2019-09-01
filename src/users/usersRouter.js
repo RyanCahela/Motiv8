@@ -43,9 +43,10 @@ userRouter.route('/')
 
 userRouter.route('/login')
   .post(jsonParser, (req, res, next) => {
+    let jwtPayload = { userId: undefined };
     const { username, password } = req.body;
-    const userCredentials = { username, password };
-    for (const [key, value] of Object.entries(userCredentials)) {
+    const postedCredentials = { username, password };
+    for (const [key, value] of Object.entries(postedCredentials)) {
       if(!value) {
         return res.status(400).json({
           error: `missing ${key} in request body`
@@ -55,25 +56,21 @@ userRouter.route('/login')
     //grab user obj from db
     UsersServices.getUserByUsername(req.app.get('db'), username)
       .then(dbUser => {
-        if(!dbUser.hasOwnProperty('id')) return res.status(400).json({error: 'Incorrect username'});
+        if(!dbUser || !dbUser.hasOwnProperty('id')) {
+          return res.status(400).json({error: 'Incorrect username'});
+        }
+        jwtPayload.userId = dbUser.id;
         //verify req password matches password stored in db.
-        return AuthServices.comparePasswords(userCredentials.password, dbUser.password)
-                .then(isMatch => {
-                  if(!isMatch) return res.status(400).json({error: 'Incorrect password'});
-                  //get saved quotes for user
-                  SaveQuoteServices.getSavedQuotesByUserId(req.app.get('db'), dbUser.id)
-                  .then(savedQuotes => {
-                    //create jwt
-                    const subject = dbUser.username;
-                    const payload = { userId: dbUser.id };
-                    res.status(200).send({
-                      authToken: AuthServices.createJwt(subject, payload),
-                      savedQuotes: savedQuotes
-                    });
-                  });
-                });
+        return AuthServices.comparePasswords(postedCredentials.password, dbUser.password);
+      })
+      .then(passwordIsMatch => {
+        if(!passwordIsMatch) return res.status(400).json({error: 'Incorrect password'});
+        const subject = username;
+        //send jwt back to client
+        res.status(200).send({
+          authToken: AuthServices.createJwt(subject, jwtPayload),
+        });
       });
-    //send jwt back to client
   });
 
 //Protected Routes

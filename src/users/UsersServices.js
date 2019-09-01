@@ -4,10 +4,11 @@ const AuthServices = require('../services/AuthServices');
 
 const UsersServices = {
   checkIfUserExists(dbInstance, username) {
+    console.log('username',username);
     return dbInstance
     .from('users')
     .select('*')
-    .where({'username': username})
+    .where({username: username})
     .first() //returns first item in returned array, if array empty returns undefined
     .then(user => {
       return Boolean(user)
