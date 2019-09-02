@@ -4,7 +4,6 @@ const AuthServices = require('../services/AuthServices');
 
 const UsersServices = {
   checkIfUserExists(dbInstance, username) {
-    console.log('username',username);
     return dbInstance
     .from('users')
     .select('*')
