@@ -13,24 +13,36 @@ API for Motiv8
 
 ```
 /api
-├── /login
-│   └── POST
-│       └── /
 |
 ├── /quotes
-│   └── GET /
+│   └── GET 
+│       └── /
+│   └── POST 
+│       └── /
+│   └── PATCH 
+│       └── /
+│   └── DELETE 
+│       └── /:quoteId
 |
 ├── /savedQuotes
 │   └── GET
-│       └── /:userId
+│       └── /:username (auth required)
 │   └── POST
-│       └── /
+│       └── /          (auth required)
 │   └── PATCH
-│       └── /
+│       └── /          (auth required)
 │   └── DELETE
-│       └── /
+│       └── /          (auth required)
 |
 ├── /users
+│   └── GET
+│       └── /:username (auth required)
 │   └── POST
 │       └── /
+│   └── POST
+│       └── /login
+│   └── PATCH
+│       └── /:username (auth required)
+│   └── DELETE
+│       └── /:username (auth required)
 ```
