@@ -57,20 +57,26 @@ userRouter.route('/login')
     UsersServices.getUserByUsername(req.app.get('db'), username)
       .then(dbUser => {
         if(!dbUser || !dbUser.hasOwnProperty('id')) {
-          return res.status(400).json({error: 'Incorrect username'});
+          res.status(400).json({error: 'Incorrect username'})
+          throw new Error('Incorrect username');
         }
         jwtPayload.userId = dbUser.id;
         //verify req password matches password stored in db.
         return AuthServices.comparePasswords(postedCredentials.password, dbUser.password);
       })
       .then(passwordIsMatch => {
-        if(!passwordIsMatch) return res.status(400).json({error: 'Incorrect password'});
+        if(!passwordIsMatch) {
+          res.status(400).json({error: 'Incorrect password'});
+          throw new Error('Incorrect password');
+        };
         const subject = username;
         //send jwt back to client
-        res.status(200).send({
-          authToken: AuthServices.createJwt(subject, jwtPayload),
+        let token = AuthServices.createJwt(subject, jwtPayload)
+        res.status(200).json({
+          authToken: token,
         });
-      });
+      })
+      .catch(err => console.error(err));
   });
 
 //Protected Routes
